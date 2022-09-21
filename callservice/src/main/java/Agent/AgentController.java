@@ -19,6 +19,10 @@ public class AgentController {
     public String index() {
         return "index";
     }
+    @RequestMapping("/supervisor")
+    public String people() {
+        return "supervisorPage";
+    }
 
 
     /**
