@@ -1,12 +1,15 @@
-package Agent;
+package com.callservice.callservice.Agent;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+@Controller
 public class AgentController {
 
     public AgentController() {
@@ -15,10 +18,12 @@ public class AgentController {
     /**
      * GET  /  -> show the index page.
      */
-    @RequestMapping("/")
+    // @RequestMapping("/")
+    @GetMapping("/")
     public String index() {
         return "index";
     }
+
     @RequestMapping("/supervisor")
     public String people() {
         return "supervisorPage";
@@ -29,7 +34,7 @@ public class AgentController {
      * ???  /  -> Retrieves STOMP messaging and returns an Agent.
      */
     @MessageMapping("/hello")
-    @SendTo("/topic/service")
+    @SendTo("/topic/greetings")
     public Agent socketReturn(String msg) throws Exception {
         System.out.println("Hello world test");
 

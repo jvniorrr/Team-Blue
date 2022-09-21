@@ -1,4 +1,4 @@
-package WebSocket;
+package com.callservice.callservice.WebSocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
