@@ -29,6 +29,16 @@ public class AgentController {
         return "supervisorPage";
     }
 
+    @GetMapping("/agentsPage")
+    public String agents() {
+        return "agents";
+    }
+
+    @GetMapping("/ahmedTest")
+    public String testF() {
+        return "ahmedAgents";
+    }
+
 
     /**
      * ???  /  -> Retrieves STOMP messaging and returns an Agent.
