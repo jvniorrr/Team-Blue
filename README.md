@@ -13,16 +13,24 @@ Our project is to create a web based application for a call center. Idea for now
 
 ## To-Do
 ### Backend
+- [x] REST API implementation
+- [x] Server Side Event to emit calls.
 - [ ] Create SQL Models
-- [ ] Create User API or View google stubs / messages Dmitry mentioned
-- [ ] Create Supervisor API
+- [ ] Integrate SQL with our frontend, so if client refreshes HTML changes stay persistent 
 - [ ] More... 
 ### Frontend
-- [ ] Bootstrap fundamentals
-- [ ] Mockups to base ideas off of.
-- [ ] Create Supervisor render page
-- [ ] Create page for user
-- [ ] Integrate JS calls to the backend / User API(maybe FETCH, AXIOS, or AJAX)  
+- [x] Bootstrap fundamentals (think frontend got already?)
+- [x] Mockups to base ideas off of.
+- [x] Create Supervisor render page (view agents in grid, needs some work.)
+- [ ] Integrate Vanilla JS to handle events that are emitted.
+
+### Database 
+- [ ] Add an agent
+- [ ] Update an agent
+- [ ] Remove Agent
+- [ ] Retrieve all active agents
+- [ ] Filters for agents to retrieve if active, busy etc.
+- [ ] Clear database, clears existing after X hours
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
