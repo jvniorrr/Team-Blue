@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 
+/**
+ * Rest API Controller 
+ * - For sending updates for new agents. 
+ */
 @RestController
 public class AgentRestController {
 
@@ -20,7 +24,7 @@ public class AgentRestController {
 
     @RequestMapping("/agents")
     public SseEmitter agents() {
-        SseEmitter sseEmitter = new SseEmitter((long) (60000 * 5));
+        SseEmitter sseEmitter = new SseEmitter((long) (60000 * 1)); // add a 1 minute timeout
 
 
         emitters.add(sseEmitter);
@@ -43,7 +47,7 @@ public class AgentRestController {
         System.out.println(info);
         for (SseEmitter emitter : emitters) {
             try {
-                emitter.send(SseEmitter.event().name("spring").data(info));
+                emitter.send(SseEmitter.event().name("updateAgent").data(info));
             } catch (IOException e) {
                 System.out.println("IO Exception occured");
             } catch (Exception e) {
