@@ -23,7 +23,7 @@ source.addEventListener('updateAgent', function(event) {
     let agent = $(`i[data-userid='${agentData.id}']`);
     if (agent.length) {
         present = true;
-        updateAgent(agent, CSS_Options[agentData.status])
+        updateAgent(agent, CSS_Options[agentData.status], agentData.status)
     }
 
     // create element per agent if not already present
@@ -46,6 +46,7 @@ source.addEventListener('updateAgent', function(event) {
 
 }); 
 
-function updateAgent(element, newColor) {
+function updateAgent(element, newColor, status) {
     element.css('color', newColor);
+    element.attr('data-user-status', status);
 }
