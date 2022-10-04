@@ -3,7 +3,7 @@ var source = new EventSource('/agents');
 var gridElement = $('#dotRows');
 var totalAgents = 0;
 
-source.addEventListener('spring', function(event) {
+source.addEventListener('updateAgent', function(event) {
 
     // can accept a collection / list and iterate through each
 
