@@ -1,67 +1,51 @@
-var stompClient = null;
+// Hanlder for events being emitted
+var source = new EventSource('/agents');
+var gridElement = $('#dotRows');
 
-function setConnected(connected) {
-    $("#connect").prop("disabled", connected);
-    $("#disconnect").prop("disabled", !connected);
-    if (connected) {
-        $("#conversation").show();
+source.addEventListener('updateAgent', function(event) {
+
+    // can accept a collection / list and iterate through each
+
+    // parse through the event
+    let agentData = JSON.parse(event.data);
+
+    let CSS_Options = {
+        "available" : "green", // available
+        "busy" : "red", // on voice call
+        "logged-out" : "black", // logged out
+        "after" : "yellow", // after call work
+        "preview" : "blue", // on preview task
     }
-    else {
-        $("#conversation").hide();
+
+    // check in all the displayed i elements if the agent is already present
+    let present = false;
+    // check if the user is present 
+    let agent = $(`i[data-userid='${agentData.id}']`);
+    if (agent.length) {
+        present = true;
+        updateAgent(agent, CSS_Options[agentData.status])
     }
-    $("#greetings").html("");
-}
 
-function connect() {
-    var socket = new SockJS('http://localhost:8080/stomp-endpoint');
-    // var socket = new SockJS('stomp-endpoint');
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        setConnected(true);
-
-        console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function (greeting) {
-            // pass to sep function to handle rendering live
-            showGreeting(JSON.parse(greeting.body));
-        });
-    });
-}
-
-function disconnect() {
-    if (stompClient !== null) {
-        stompClient.disconnect();
+    // create element per agent if not already present
+    if (!present) {
+        const nodeElement = document.createElement("i");
+        const element = $(nodeElement);
+        // TODO: More efficiently add classes in one line
+        element.addClass('fa-solid');
+        element.addClass('fa-circle');
+        element.addClass('agents');
+        element.addClass('px-1');
+        element.css('color', CSS_Options[agentData.status])
+        // attributes to be used when hovering
+        element.attr("data-userID", agentData.id);
+        element.attr("data-user-status", agentData.status);
+        element.attr("title", `${agentData.id}\n${agentData.status}`);
+        $('#dotRows').prepend(element);
     }
-    setConnected(false);
-    console.log("Disconnected");
+    
+
+}); 
+
+function updateAgent(element, newColor) {
+    element.css('color', newColor);
 }
-
-function sendName() {
-    stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
-}
-
-function showGreeting(message) {
-
-    console.log("hello world")
-
-    var agentRowName = `<td>${message.name}</td>`;
-    var agentRowID = `<td>${message.id}</td>`;
-    var agentRowStatus = `<td>${message.status}</td>`;
-    var agentRowTime = `<td>${new Date().toLocaleTimeString()}</td>`;
-
-    var agentRow = `<tr>${agentRowName}
-    ${agentRowID}
-    ${agentRowStatus}
-    ${agentRowTime}
-    `
-
-    $("#greetings").append(agentRow);
-}
-
-$(function () {
-    $("form").on('submit', function (e) {
-        e.preventDefault();
-    });
-    $( "#connect" ).click(function() { connect(); });
-    $( "#disconnect" ).click(function() { disconnect(); });
-    $( "#send" ).click(function() { sendName(); });
-});
