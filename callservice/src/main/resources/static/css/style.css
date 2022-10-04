@@ -1,0 +1,26 @@
+* {
+    /* margin: 0;
+    padding: 0; */
+    font-family: "Nunito Sans", sans-serif;
+}
+
+
+.neumorphism-badge {
+    box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #ffffff;
+    background-color: transparent;
+    color: #31344b;
+
+    font-size: 0.7rem;
+    font-weight: 600;
+    border: 0.0625rem solid #D1D9E6;
+    padding: 0.275rem 0.425rem;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.55rem;
+}
+
+label {
+    margin-bottom: 0.5rem
+}
