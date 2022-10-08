@@ -31,6 +31,7 @@ Our project is to create a web based application for a call center. Idea for now
 - [ ] Retrieve all active agents
 - [ ] Filters for agents to retrieve if active, busy etc.
 - [ ] Clear database, clears existing after X hours
+ -[ ] Database should store for now ID, status & a full name & an updatedTime/currentTime field as well.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
