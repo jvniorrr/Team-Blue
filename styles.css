@@ -1,5 +1,5 @@
 body {
-    background: #eeedfa;
+    background: #262626;
 }
 
 .grid-container {
@@ -11,29 +11,35 @@ body {
 
   .item {
     min-width: 50px;
-    
     text-align:center;
-    
+    margin-bottom: 30px;
   }
 
   .label {
     color:#eeedfa;
     text-shadow: #9d99c2 1px 2px;
     font-size: 20px;
+    display: none;
+  }
+
+  .item:hover {
+    margin-bottom: 0px;
+  }
+
+  .item:hover .label{
+    display: block;
   }
 
   .circle {
     margin-left: auto;
-  margin-right: auto;
-   
+    margin-right: auto;
     margin-bottom: 10px;
-    width:50px;
-    height: 50px;
+    width:25px;
+    height: 25px;
     border-radius: 50%;
-background: #eeedfa;
-box-shadow:  7px 7px 14px #cfceda,
-             -7px -7px 14px #ffffff;
-             
+    background: #262626;
+    box-shadow:  7px 7px 14px rgba(58, 58, 58, 0.3),
+             -7px -7px 14px rgba(0,0,0,.2);           
   }
 
   .btn-box .btn {
@@ -47,9 +53,11 @@ box-shadow:  7px 7px 14px #cfceda,
   .rect {
     width: 30px;
     height:30px;
-	background: #eeedfa;
-	border-radius: 5px;
-	box-shadow: inset -3px -3px 5px hsl(245, 23%, 78%), inset 10px 5px 10px #fff;
+	  background: #262626;
+	  border-radius: 5px;
+	  box-shadow: inset -3px -3px 5px rgba(58, 58, 58, 0.3), inset 10px 5px 10px rgba(0,0,0,.2);
+    /* box-shadow:  7px 7px 14px rgba(58, 58, 58, 0.3),
+             -7px -7px 14px rgba(0,0,0,.2);  */
     display: inline-block;
     vertical-align: middle;
     margin-right:10px;
@@ -58,13 +66,12 @@ box-shadow:  7px 7px 14px #cfceda,
   .rect-pressed {
     width: 30px;
     height:30px;
-	background: #eeedfa;
-	
+	  background: #262626;
     display: inline-block;
     vertical-align: middle;
     margin-right:10px;
     border-radius: 5px;
-	box-shadow: inset -3px -3px 7px #ffffffb0, inset 3px 3px 5px rgba(94, 104, 121, 0.692);
+	  box-shadow: inset -3px -3px 7px rgba(58, 58, 58, 0.3), inset 3px 3px 5px rgba(0,0,0,.2);
   }
 
   .btn-box {
@@ -78,7 +85,9 @@ box-shadow:  7px 7px 14px #cfceda,
     font-size: 30px;
     background-color: #ff0063;
     color:#ff0063;
-    box-shadow: 3px 2px 10px #a8a8a8;
+    box-shadow:  7px 7px 14px rgba(58, 58, 58, 0.3),
+             -7px -7px 14px rgba(0,0,0,.2);     
+    /* box-shadow: 3px 2px 10px #a8a8a8; */
     margin:30px;
   }
 
@@ -116,3 +125,31 @@ box-shadow:  7px 7px 14px #cfceda,
   .header {
     padding:20px;
   }
+
+  .hamburgerIcon {
+    color:white;
+    font-size:35px;
+  }
+
+  .hamburgerIcon:focus + .menu {
+    
+    opacity: 1;
+    
+  }
+
+  .menu {
+    -webkit-transition: -webkit-transform 1s;
+    transition: transform 1s;
+    opacity: 0;
+    -moz-transition: opacity 0.4s ease-in-out;
+    -o-transition: opacity 0.4s ease-in-out;
+    -webkit-transition: opacity 0.4s ease-in-out;
+    transition: opacity 0.4s ease-in-out;
+  }
+
+  .active-menu {
+    
+    display: block;
+  }
+
+  
