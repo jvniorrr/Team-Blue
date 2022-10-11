@@ -1,6 +1,6 @@
 # Team Blue
 
-Our project is to create a web based application for a call center. Idea for now is to create 2 separate API's. A User AP I and a Supervisor API
+Our project is to create a web based application which renders real time changes for a call center. We are implementing one API to handle the requests, and a SQL database to store the information. We are also using this database to render changes and for our filtering abilities. 
 
 ## Utilities
 - Java
