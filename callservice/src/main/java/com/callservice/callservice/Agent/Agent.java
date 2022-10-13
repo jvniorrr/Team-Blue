@@ -1,5 +1,10 @@
 package com.callservice.callservice.Agent;
 
+
+/**
+ * Class Object to hold Agents information
+ * - Stores Name, ID, and a status. Time param will be set when setting values in Database. 
+ */
 public class Agent {
         // Fields
         private String name;

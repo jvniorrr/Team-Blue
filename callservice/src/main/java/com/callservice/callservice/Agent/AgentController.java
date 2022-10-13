@@ -23,6 +23,11 @@ public class AgentController {
         return "index";
     }
 
+    @GetMapping("/home")
+    public String home() {
+        return "home";
+    }
+
     // commented out for now, index holds this now
     // @GetMapping("/agentsPage")
     // public String agents() {
