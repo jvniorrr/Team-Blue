@@ -1,12 +1,18 @@
 package com.callservice.callservice.Agent;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * Class Object to hold Agents information
  * - Stores Name, ID, and a status. Time param will be set when setting values in Database. 
  */
+@Entity
 public class Agent {
         // Fields
+        @Id
+        private Integer storeId;    //Id for referencing in DB
+
         private String name;
         private Long id;
         private String status;
@@ -34,6 +40,11 @@ public class Agent {
         public String getStatus() {
             return status;
         }
+
+        public Integer getStore()
+        {
+            return storeId;
+        }
     
         // Setters
         public void setName(String name) {
@@ -47,11 +58,21 @@ public class Agent {
         public void setStatus(String status) {
             this.status = status;
         }    
-    
+        
+        public void setStore(Integer storeId)
+        {
+            this.storeId = storeId;
+        }
+
         // TO STRING
         @Override
         public String toString() {
             return "Agent [id=" + id + ", name=" + name + ", status=" + status + "]";
+        }
+
+        public String toJson()
+        {
+            return "{\"storeId\": " + this.storeId + ", \"name\": \"" + this.name + "\", \"id\": " + this.id + ", \"status\": \"" + this.status + "\"}";
         }
         
 }
