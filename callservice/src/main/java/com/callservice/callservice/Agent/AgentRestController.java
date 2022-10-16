@@ -6,11 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import com.callservice.callservice.service.RuntimeProcess;
 
 
 /**
@@ -19,6 +23,33 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
  */
 @RestController
 public class AgentRestController {
+
+    @Autowired
+    private RuntimeProcess service;
+
+    @RequestMapping(value = "/gate", method = RequestMethod.POST)
+    public String createEmployee(@RequestBody Agent employee)
+    {
+        return service.createEmployee(employee);
+    }
+
+    @RequestMapping(value = "/gate", method = RequestMethod.GET)
+    public List<Agent> readEmployees()
+    {
+        return service.readEmployees();
+    }
+
+    @RequestMapping(value = "/gate", method = RequestMethod.PUT)
+    public String updateEmployee(@RequestBody Agent employee)
+    {
+        return service.updateEmployee(employee);
+    }
+
+    @RequestMapping(value = "/gate", method = RequestMethod.DELETE)
+    public String deleteEmployee(@RequestBody Agent employee)
+    {
+        return service.deleteEmployee(employee);
+    }
 
     // set up emitter to transmit calls
     private List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
