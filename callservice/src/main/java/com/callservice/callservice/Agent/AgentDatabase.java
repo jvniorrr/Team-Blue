@@ -1,14 +1,18 @@
 package com.callservice.callservice.Agent;
 import java.sql.*;
+import java.text.*;
 
 public class AgentDatabase {
 
+    private static String dbName = null;
+    private static int maxIndex = -1;
     /*This method will connect to existing database. If one does not exist
       it will be created. It will also create a table for the database*/
     public static void AgentDatabase(String fileName) {
 
         //Beginning of connection.
         String url = "jdbc:sqlite:"+ fileName;
+        dbName = url;
 
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -36,27 +40,32 @@ public class AgentDatabase {
     }
 
     //This method inserts initial data into the table
-        public static void insert() {
+        public static void insert(Agent a) {
             try {
                 Connection c = null;
                 Statement stmt = null;
                 Class.forName("org.sqlite.JDBC");
-                c = DriverManager.getConnection("jdbc:sqlite:AgentDatabase.db");
+                c = DriverManager.getConnection(dbName);
                 c.setAutoCommit(false);
                 System.out.println("Opened database successfully");
 
+                if(a.getStore() <= maxIndex) {
+                    update(a);
+                }
+                int ref = a.getStore();
+                String name = a.getName();
+                long id = a.getId();
+                String status = a.getStatus();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                String ts = sdf.format(timestamp);
+                maxIndex = ref;
+
                 stmt = c.createStatement();
                 String sql = "INSERT INTO AGENTS (ID,NAME,ID_NUMBER,STATUS,DATE_TIME) " +
-                        "VALUES (1, 'Paul', 321, 'Available', '1998-02-07 12:23:00' );";
+                        "VALUES (" +  ref + ", " + name + ", " + id + ", " + status + ", " + ts + ");";
                 stmt.executeUpdate(sql);
 
-                sql = "INSERT INTO AGENTS (ID,NAME,ID_NUMBER,STATUS,DATE_TIME) " +
-                        "VALUES (2, 'Allen', 125, 'Available', '1999-12-23 16:23:00' );";
-                stmt.executeUpdate(sql);
-
-                sql = "INSERT INTO AGENTS (ID,NAME,ID_NUMBER,STATUS,DATE_TIME) " +
-                        "VALUES (3, 'Teddy', 123, 'Available', '1988-06-27 09:23:00' );";
-                stmt.executeUpdate(sql);
                 stmt.close();
                 c.commit();
                 c.close();
@@ -66,7 +75,7 @@ public class AgentDatabase {
         }
 
         // This method will fetch and display records
-    public static void select() {
+    public static void select(Agent a) {
 
         Connection c = null;
         Statement stmt = null;
@@ -76,8 +85,13 @@ public class AgentDatabase {
             c.setAutoCommit(false);
             System.out.println("Opened database successfully");
 
+            String s = "SELECT * FROM AGENTS;";
+            if(a != null) {
+                int ref = a.getStore();
+                s = "SELECT * FROM AGENTS WHERE ID = " + ref + ";";
+            }
             stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM AGENTS;" );
+            ResultSet rs = stmt.executeQuery(s);
 
             while ( rs.next() ) {
                 int id = rs.getInt("ID");
@@ -104,18 +118,23 @@ public class AgentDatabase {
     }
 
     //This method will update database information
-    public static void update(){
+    public static void update(Agent a){
 
         Connection c = null;
         Statement stmt = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:AgentDatabase.db");
+            c = DriverManager.getConnection(dbName);
             c.setAutoCommit(false);
             System.out.println("Opened database successfully");
 
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            String ts = sdf.format(timestamp);
+
             stmt = c.createStatement();
-            String sql = "UPDATE AGENTS set ID_NUMBER = 12345  where ID=1;";
+            int id1 = a.getStore();
+            String sql = "UPDATE AGENTS set STATUS = " + a.getStatus() + ", DATE_TIME = " + ts + " where ID = " + id1 + ";";
             stmt.executeUpdate(sql);
             c.commit();
 
@@ -146,7 +165,7 @@ public class AgentDatabase {
     }
 
     //This method will delete individual records
-    public static void delete() {
+    public static void delete(Agent a) {
         Connection c = null;
         Statement stmt = null;
 
@@ -157,7 +176,8 @@ public class AgentDatabase {
             System.out.println("Opened database successfully");
 
             stmt = c.createStatement();
-            String sql = "DELETE from AGENTS where ID=2;";
+            int ref = a.getStore();
+            String sql = "DELETE from AGENTS where ID = " + ref + ";";
             stmt.executeUpdate(sql);
             c.commit();
 
@@ -190,9 +210,5 @@ public class AgentDatabase {
 
     public static void main(String[] args){
         AgentDatabase("AgentDatabase.db");
-        insert();
-        select();
-        update();
-        delete();
     }
 }
