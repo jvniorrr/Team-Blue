@@ -21,7 +21,6 @@
   <p align="center"> 
 Agent Call Service is a customer service application that provides call center supervisors the ability to monitor their agents. This application helps the supervisor stay organized and manage their time efficiently by monitoring a web page for changes. 
 <br>
-    ·
     <a href="https://github.com/ericjiang255/Team-Blue/issues">Report Bug</a>
     ·
     <a href="https://github.com/ericjiang255/Team-Blue/issues">Request Feature</a>
