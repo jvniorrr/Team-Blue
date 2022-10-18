@@ -104,7 +104,7 @@ For building and running the application you need:
 
 `POST /update/`
 
-> Route to update a new user or create a new user accordingly <br> `curl --location --request POST 'localhost:3000/update' \
+> Route to update a new user or create a new user accordingly <br> ```curl --location --request POST 'localhost:3000/update' \
 > --header 'Accept: application/json' \
 > --header 'Content-type: application/json' \
 > --data-raw '{
@@ -112,7 +112,7 @@ For building and running the application you need:
     "name": "first last",
     "id":"9cbf9316-bf54-4bba-8e85-7917f0895edd",
     "status": "available"
-    }'`
+    }'```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
