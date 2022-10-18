@@ -22,6 +22,7 @@
     width: 1310px;
     height: 860px;
     display: grid;
+    grid-template-rows: repeat(100, 5px (row-start));
     grid-template-columns: repeat(100, 5px[col-start]);
     column-gap:.5px;
     row-gap:.5px;
