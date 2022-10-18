@@ -65,10 +65,17 @@ public class AgentRestController {
      * @return information regarding what process occured.
      */
     @RequestMapping(value = "/gatej", method = RequestMethod.GET)
-    public String updateAgent(@RequestBody Agent employee)
+    public Map<String, String> updateAgent(@RequestBody Agent employee)
     {
         // System.out.println(employee);
-        return service.updateAgent(employee);
+        Map<String, String> ret = new HashMap<>();
+        String update = service.updateAgent(employee);
+
+        ret.put("message", update);
+        ret.put("status", "200");
+        ret.put("success", (update.equalsIgnoreCase("employee record updated") || update.equalsIgnoreCase("employee created") ? "true" : "false"));
+        // return service.updateAgent(employee);
+        return ret;
     }
     
     /**
@@ -77,10 +84,17 @@ public class AgentRestController {
      * @return information regarding what process occured.
      */
     @RequestMapping(value = "/gatej", method = RequestMethod.DELETE)
-    public String deleteAgent(@RequestBody Agent employee)
+    public Map<String, String> deleteAgent(@RequestBody Agent employee)
     {
         // System.out.println(employee);
-        return service.deleteAgent(employee);
+        Map<String, String> ret = new HashMap<>();
+        String update = service.deleteAgent(employee);
+
+        ret.put("message", update);
+        ret.put("status", "200");
+        ret.put("success", (update.equalsIgnoreCase("employee record deleted") ? "true" : "false"));
+        return ret;
+        // return service.deleteAgent(employee);
     }
 
     /**
@@ -91,6 +105,7 @@ public class AgentRestController {
     @RequestMapping(value = "/filter", method = RequestMethod.GET)
     public List<Agent> filterAgents(@RequestParam(name = "status", required = false) String filter)
     {
+
         if (filter != null && validFilter(filter) == true)
         {
             return service.filterAll(filter);
