@@ -160,7 +160,7 @@ Please make sure to update tests as appropriate.
 
 -   [Choose an Open Source License](https://choosealicense.com)
 -   [Img Shields](https://shields.io)
--   [Best-README-Template] [Best-README-Template]
+-   [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
