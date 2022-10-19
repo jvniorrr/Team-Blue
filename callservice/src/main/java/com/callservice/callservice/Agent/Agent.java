@@ -117,7 +117,7 @@ public class Agent {
 
         public String toJson()
         {
-            return "{\"storeId\": " + this.storeId + ", \"name\": \"" + this.name + "\", \"id\": " + this.id + ", \"status\": \"" + this.status + ", \"idString\":\"" + this.idString "\"}";
+            return "{\"storeId\": " + this.storeId + ", \"name\": \"" + this.name + "\", \"id\": " + this.id + ", \"status\": \"" + this.status + ", \"idString\":\"" + this.idString + "\"}";
         }
         
 }
