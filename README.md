@@ -174,7 +174,7 @@ Please make sure to update tests as appropriate.
 [issues-shield]: https://img.shields.io/github/issues/ericjiang255/Team-Blue.svg?style=for-the-badge
 [issues-url]: https://github.com/ericjiang255/Team-Blue/issues
 [license-shield]: https://img.shields.io/github/license/ericjiang255/Team-Blue.svg?style=for-the-badge
-[license-url]: https://github.com/ericjiang255/Team-Blue/blob/master/LICENSE.txt
+[license-url]: https://github.com/ericjiang255/Team-Blue/LICENSE.txt
 [product-screenshot]: images/screenshot.png
 [html.com]: https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white
 [css.com]: https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white
