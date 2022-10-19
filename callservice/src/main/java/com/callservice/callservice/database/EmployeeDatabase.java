@@ -1,5 +1,7 @@
 package com.callservice.callservice.database;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,4 +19,10 @@ public interface EmployeeDatabase extends JpaRepository<Agent, Integer>
 
     @Query("select a.storeId from Agent a where a.id = ?1")
     public Integer mapStore(Long id);
+
+    @Query("select a from Agent a where a.idString = ?1")
+    public Agent findAgent(String param);
+
+    @Query("select a from Agent a where a.status = ?1")
+    public List<Agent> findAllFilter(String param);
 }

@@ -51,9 +51,9 @@
                 </div>
             </li>
             <li class="nav-item w-100 d-flex flex-row justify-content-between state-color align-items-center">
-                <i class="fa-solid fa-circle fa-xl state-color-dot loggedout"></i>
-                <div href="#" class="nav-link text-light pl-4 loggedout">
-                    Logged Out
+                <i class="fa-solid fa-circle fa-xl state-color-dot after"></i>
+                <div href="#" class="nav-link text-light pl-4 after">
+                    After-Work
                 </div>
             </li>
             <li class="nav-item w-100 d-flex flex-row justify-content-between state-color align-items-center">
@@ -63,9 +63,9 @@
                 </div>
             </li>
             <li class="nav-item w-100 d-flex flex-row justify-content-between state-color align-items-center">
-                <i class="fa-solid fa-circle fa-xl state-color-dot after"></i>
-                <div href="#" class="nav-link text-light pl-4 after">
-                    After-Work
+                <i class="fa-solid fa-circle fa-xl state-color-dot logged-out"></i>
+                <div href="#" class="nav-link text-light pl-4 logged-out">
+                    Logged Out
                 </div>
             </li>
         </ul>
@@ -81,28 +81,8 @@
             <div class="row">
                 <!--/* GRID RENDER */-->
                 <div id="dots-grid"  class="">
-                         <i class="fa-solid fa-circle fa-xl agent-dot busy"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot loggedout"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot available"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot after"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot busy"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot preview"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot busy"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot loggedout"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot available"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot after"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot busy"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot"></i>
-                         <i class="fa-solid fa-circle fa-xl agent-dot preview"></i>
-                        
+                         <i th:each="agent : ${agents}" th:attr="class='fa-solid fa-circle agent-dot '+${agent.status}, data-username=${agent.name}, data-user-id=${agent.idString}, data-user-status=${agent.status}">
+                         </i>                        
                 
                         <!-- <div class="agent-dot-test">
                         </div> -->

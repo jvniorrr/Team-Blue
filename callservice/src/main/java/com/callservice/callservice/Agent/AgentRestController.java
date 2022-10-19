@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -26,6 +27,9 @@ public class AgentRestController {
 
     @Autowired
     private RuntimeProcess service;
+
+    // set up emitter to transmit calls
+    private List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
 
     @RequestMapping(value = "/gate", method = RequestMethod.POST)
     public String createEmployee(@RequestBody Agent employee)
@@ -51,8 +55,81 @@ public class AgentRestController {
         return service.deleteEmployee(employee);
     }
 
-    // set up emitter to transmit calls
-    private List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
+
+
+
+    // JUNIOR
+    /**
+     * Method to update an agent given a UUID (String), Status (String), and Name (String)
+     * @param employee
+     * @return information regarding what process occured.
+     */
+    @RequestMapping(value = "/gatej", method = RequestMethod.GET)
+    public Map<String, String> updateAgent(@RequestBody Agent employee)
+    {
+        // System.out.println(employee);
+        Map<String, String> ret = new HashMap<>();
+        String update = service.updateAgent(employee);
+
+        ret.put("message", update);
+        ret.put("status", "200");
+        ret.put("success", (update.equalsIgnoreCase("employee record updated") || update.equalsIgnoreCase("employee created") ? "true" : "false"));
+        // return service.updateAgent(employee);
+        return ret;
+    }
+    
+    /**
+     * Method to delete an agent given a UUID (String), Status (String), and Name (String)
+     * @param employee
+     * @return information regarding what process occured.
+     */
+    @RequestMapping(value = "/gatej", method = RequestMethod.DELETE)
+    public Map<String, String> deleteAgent(@RequestBody Agent employee)
+    {
+        // System.out.println(employee);
+        Map<String, String> ret = new HashMap<>();
+        String update = service.deleteAgent(employee);
+
+        ret.put("message", update);
+        ret.put("status", "200");
+        ret.put("success", (update.equalsIgnoreCase("employee record deleted") ? "true" : "false"));
+        return ret;
+        // return service.deleteAgent(employee);
+    }
+
+    /**
+     * Method to filter out employees based off of a specific filter string
+     * @param filter
+     * @return
+     */
+    @RequestMapping(value = "/filter", method = RequestMethod.GET)
+    public List<Agent> filterAgents(@RequestParam(name = "status", required = false) String filter)
+    {
+
+        if (filter != null && validFilter(filter) == true)
+        {
+            return service.filterAll(filter);
+        }
+        else 
+        {
+            return service.readEmployees();
+        }
+    }
+
+    private Boolean validFilter(String filter) 
+    {
+        if (filter.equalsIgnoreCase("available") ||
+            filter.equalsIgnoreCase("busy") || 
+            filter.equalsIgnoreCase("logged-out") || 
+            filter.equalsIgnoreCase("preview") || 
+            filter.equalsIgnoreCase("after") 
+        ) {
+            return true;
+        } 
+        else {
+            return false;
+        }
+    }
 
     @RequestMapping("/agents")
     public SseEmitter agents() {
@@ -108,4 +185,3 @@ public class AgentRestController {
         return ret;
     }
 }
-
