@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -131,35 +133,50 @@ public class AgentRestController {
         }
     }
 
+    // subscription
     @RequestMapping("/agents")
     public SseEmitter agents() {
-        SseEmitter sseEmitter = new SseEmitter((long) (60000 * 1)); // add a 1 minute timeout
+        // SseEmitter sseEmitter = new SseEmitter((long) (60000 * 1)); // add a 1 minute timeout
+        SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
 
-
-        emitters.add(sseEmitter);
+        try {
+            sseEmitter.send(SseEmitter.event().name("INIT"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // define callback
         sseEmitter.onCompletion(() -> emitters.remove(sseEmitter));
-
+        sseEmitter.onTimeout(() -> emitters.remove(sseEmitter));
+        emitters.add(sseEmitter);
 
         return sseEmitter;
     }
 
-
+    // send events all clients
     @PostMapping(value = "/update")
-    public Map<String, String> updateAgent(@RequestBody Map<String, String> info) {
+    public Map<String, String> sseUpdateAgent(@RequestBody Agent employee) {
         Map<String, String> ret = new HashMap<>();
 
         // parse the incoming body request assure proper fields
-        String userID = info.get("id");
-        String userStatus = info.get("status");
+
+        // store the incoming obj into db.
+        try {
+            service.updateAgent(employee);
+            ret.put("message", "Successfully processed");
+            ret.put("response", "200");
+            ret.put("success", "true");
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
 
         for (SseEmitter emitter : emitters) {
             try {
                 // can return a msg upon successfull call
-                emitter.send(SseEmitter.event().name("updateAgent").data(info));
+                emitter.send(SseEmitter.event().name("updateAgent").data(employee));
                 // set return attibutes / keys
-                ret.put("message", "Successfullly processed");
+                ret.put("message", "Successfully processed");
                 ret.put("response", "200");
                 ret.put("success", "true");
                 
@@ -170,7 +187,7 @@ public class AgentRestController {
                 ret.put("message", "IO Exception");
                 ret.put("response", "500");
                 ret.put("success", "false");
-                System.out.println("IO Exception occured");
+                emitters.remove(emitter); // handler for io exception
                 
             } catch (Exception e) {
                 // set return attibutes / keys
@@ -184,4 +201,5 @@ public class AgentRestController {
         }
         return ret;
     }
+
 }
