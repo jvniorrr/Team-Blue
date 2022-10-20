@@ -161,15 +161,15 @@ public class AgentRestController {
         // parse the incoming body request assure proper fields
 
         // store the incoming obj into db.
-        try {
-            service.updateAgent(employee);
-            ret.put("message", "Successfully processed");
-            ret.put("response", "200");
-            ret.put("success", "true");
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-        }
+        // try {
+        //     service.updateAgent(employee);
+        //     ret.put("message", "Successfully updated Database");
+        //     ret.put("response", "200");
+        //     ret.put("success", "true");
+        // } catch (Exception e) {
+        //     // TODO: handle exception
+        //     e.printStackTrace();
+        // }
 
         for (SseEmitter emitter : emitters) {
             try {
