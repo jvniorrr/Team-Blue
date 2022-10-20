@@ -3,6 +3,17 @@
     padding: 0; */
     font-family: "Nunito Sans", sans-serif;
 }
+div
+{
+    display: inline-flex;
+}
+#listcontainer
+{
+    background-color: rgb(25, 34, 25);
+    min-width: 300px;
+    min-height: 5px;
+    margin: 50px;
+}
 
 .neumorphism-badge {
     box-shadow: inset 2px 2px 5px #505880, inset -3px -3px 7px #ffffff;
