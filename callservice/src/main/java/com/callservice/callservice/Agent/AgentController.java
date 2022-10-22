@@ -38,13 +38,10 @@ public class AgentController {
 
         List<Agent> agents;
         // TODO: add SORT here so dots stay in relative position. Sort by date creation
-        if (filter != null && validFilter(filter))
-        {
+        if (filter != null && validFilter(filter)) {
             agents = service.filterAll(filter);
-
         } 
-        else 
-        {
+        else {
             agents = service.readEmployees();
         }
 
@@ -62,17 +59,14 @@ public class AgentController {
 
 
 
-    private Boolean validFilter(String filter) 
-    {
+    private Boolean validFilter(String filter) {
         if (filter.equalsIgnoreCase("available") ||
-            filter.equalsIgnoreCase("busy") || 
-            filter.equalsIgnoreCase("logged-out") || 
-            filter.equalsIgnoreCase("preview") || 
-            filter.equalsIgnoreCase("after") 
-        ) {
+                filter.equalsIgnoreCase("busy") ||
+                filter.equalsIgnoreCase("logged-out") ||
+                filter.equalsIgnoreCase("preview") ||
+                filter.equalsIgnoreCase("after")) {
             return true;
-        } 
-        else {
+        } else {
             return false;
         }
     }

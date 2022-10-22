@@ -34,26 +34,22 @@ public class AgentRestController {
     private List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
 
     @RequestMapping(value = "/gate", method = RequestMethod.POST)
-    public String createEmployee(@RequestBody Agent employee)
-    {
+    public String createEmployee(@RequestBody Agent employee) {
         return service.createEmployee(employee);
     }
 
     @RequestMapping(value = "/gate", method = RequestMethod.GET)
-    public List<Agent> readEmployees()
-    {
+    public List<Agent> readEmployees() {
         return service.readEmployees();
     }
 
     @RequestMapping(value = "/gate", method = RequestMethod.PUT)
-    public String updateEmployee(@RequestBody Agent employee)
-    {
+    public String updateEmployee(@RequestBody Agent employee) {
         return service.updateEmployee(employee);
     }
 
     @RequestMapping(value = "/gate", method = RequestMethod.DELETE)
-    public String deleteEmployee(@RequestBody Agent employee)
-    {
+    public String deleteEmployee(@RequestBody Agent employee) {
         return service.deleteEmployee(employee);
     }
 
@@ -67,8 +63,7 @@ public class AgentRestController {
      * @return information regarding what process occured.
      */
     @RequestMapping(value = "/gatej", method = RequestMethod.GET)
-    public Map<String, String> updateAgent(@RequestBody Agent employee)
-    {
+    public Map<String, String> updateAgent(@RequestBody Agent employee) {
         // System.out.println(employee);
         Map<String, String> ret = new HashMap<>();
         String update = service.updateAgent(employee);
@@ -86,8 +81,7 @@ public class AgentRestController {
      * @return information regarding what process occured.
      */
     @RequestMapping(value = "/gatej", method = RequestMethod.DELETE)
-    public Map<String, String> deleteAgent(@RequestBody Agent employee)
-    {
+    public Map<String, String> deleteAgent(@RequestBody Agent employee) {
         // System.out.println(employee);
         Map<String, String> ret = new HashMap<>();
         String update = service.deleteAgent(employee);
@@ -105,21 +99,17 @@ public class AgentRestController {
      * @return
      */
     @RequestMapping(value = "/filter", method = RequestMethod.GET)
-    public List<Agent> filterAgents(@RequestParam(name = "status", required = false) String filter)
-    {
+    public List<Agent> filterAgents(@RequestParam(name = "status", required = false) String filter) {
 
-        if (filter != null && validFilter(filter) == true)
-        {
+        if (filter != null && validFilter(filter) == true) {
             return service.filterAll(filter);
         }
-        else 
-        {
+        else {
             return service.readEmployees();
         }
     }
 
-    private Boolean validFilter(String filter) 
-    {
+    private Boolean validFilter(String filter) {
         if (filter.equalsIgnoreCase("available") ||
             filter.equalsIgnoreCase("busy") || 
             filter.equalsIgnoreCase("logged-out") || 

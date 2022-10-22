@@ -15,14 +15,11 @@ public class Agent {
         @Id
         private Integer storeId;    //Id for referencing in DB
 
-        private String name;
+        private String name, status, idString;
         private Long id;
-        private String status;
-        private String idString;
 
         // timestamps
-        private Date created = new Date();
-        private Date updatedTS = null;
+        private Date created = new Date(), updatedTS = null;
             
         // Constructors
         public Agent() {
@@ -37,86 +34,51 @@ public class Agent {
     
     
         // Getters
-        public String getName() 
-        {
-            return name;
-        }
-    
-        public Long getId() 
-        {
-            return id;
-        }
-    
-        public String getStatus() 
-        {
-            return status;
-        }
-
-        public Integer getStore()
-        {
-            return storeId;
-        }
-
-        public String getIdString() 
-        {
-            return idString;
-        }
-        
-        public Date getUpdatedTS() 
-        {
-            return updatedTS;
-        }
-        public Date getCreated() 
-        {
-            return created;
-        }
+        public String getName() { return name; }
+        public Long getId() { return id; }
+        public String getStatus() { return status; }
+        public Integer getStore() { return storeId; }
+        public String getIdString() { return idString; }
+        public Date getUpdatedTS() { return updatedTS; }
+        public Date getCreated() { return created; }
     
         // Setters
-        public void setName(String name) 
-        {
+        public void setName(String name) {
             this.name = name;
             setUpdatedTS(new Date());
         }
     
-        public void setId(Long id) 
-        {
+        public void setId(Long id) {
             this.id = id;
         }
     
-        public void setStatus(String status) 
-        {
+        public void setStatus(String status) {
             this.status = status;
             setUpdatedTS(new Date());
         }
         
-        public void setStore(Integer storeId)
-        {
+        public void setStore(Integer storeId) {
             this.storeId = storeId;
         }
 
-        public void setIdString(String idString) 
-        {
+        public void setIdString(String idString) {
             this.idString = idString;
         }
 
-        private void setUpdatedTS(Date updatedTS) 
-        {
+        private void setUpdatedTS(Date updatedTS) {
             this.updatedTS = updatedTS;
         }
-        public void setCreated(Date created) 
-        {
+        public void setCreated(Date created) {
             this.created = created;
         }
 
         // TO STRING
         @Override
-        public String toString() 
-        {
+        public String toString() {
             return "Agent [id=" + id + ", name=" + name + ", status=" + status + "idString="+ idString + "]";
         }
 
-        public String toJson()
-        {
+        public String toJson() {
             return "{\"storeId\": " + this.storeId + ", \"name\": \"" + this.name + "\", \"id\": " + this.id + ", \"status\": \"" + this.status + ", \"idString\":\"" + this.idString + "\"}";
         }
         
