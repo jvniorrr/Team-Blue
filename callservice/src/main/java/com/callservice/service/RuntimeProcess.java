@@ -1,4 +1,4 @@
-package com.callservice.callservice.service;
+package com.callservice.service;
 
 import java.util.List;
 import java.util.UUID;
@@ -8,8 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.callservice.callservice.Agent.Agent;
-import com.callservice.callservice.database.EmployeeDatabase;
+import com.callservice.Agent.Agent;
+import com.callservice.database.EmployeeDatabase;
 
 
 @Service
@@ -105,38 +105,30 @@ public class RuntimeProcess
 
     
     @Transactional
-    public String updateAgent(Agent employee)
-    {
+    public String updateAgent(Agent employee) {
         try {
             // Agent agent = database.findAgent(employee.getIdString());
             Agent agent = agentExists(employee);
 
-            if (agent != null ) 
-            {
+            if (agent != null ) {
                 // updating agent
                 setData(agent, employee);
-
-                // database.save(agent);
                 return "employee record updated";
-            } else 
-            {
+            } else {
                 // create new agent
                 employee.setStore(database.findMaxId() == null ? (Integer) 1 : database.findMaxId() + 1);
                 employee.setId(database.findMaxId() == null ? 1L : Long.valueOf(database.findMaxId() + 1));
                 database.save(employee);
                 return "employee created";
             }
-        } 
-        catch (Exception e) 
-        {
+        } catch (Exception e) {
             // TODO: handle exception
             throw e;
         }
     }
 
     @Transactional 
-    public String deleteAgent(Agent employee)
-    {
+    public String deleteAgent(Agent employee) {
         // Agent agent = database.findAgent(employee.getIdString());
         Agent agent = agentExists(employee);
 
@@ -156,44 +148,35 @@ public class RuntimeProcess
         }
     }
 
-    public List<Agent> filterAll(String filter)
-    {
+    public List<Agent> filterAll(String filter) {
         return database.findAllFilter(filter);
     }
 
 
     // UTILITIES
-    private Agent agentExists(Agent employee) 
-    {
+    private Agent agentExists(Agent employee) {
         Agent agent = database.findAgent(employee.getIdString());
         return (agent != null ? agent : null);
     }
 
-    private void setData(Agent employee, Agent newEmployee) 
-    {
-        if (employee.getId() == null)
-        {
+    private void setData(Agent employee, Agent newEmployee) {
+        if (employee.getId() == null) {
             employee.setId(database.findMaxId() == null ? 0L : Long.valueOf(database.findMaxId() + 1));
         }
 
-        if (employee.getIdString() == null)
-        {
+        if (employee.getIdString() == null) {
             employee.setIdString(UUID.randomUUID().toString());
         }
 
-        if (employee.getStatus() == null) 
-        {
+        if (employee.getStatus() == null) {
             // default
             employee.setStatus("available");
-        } 
-        else if (!(employee.getStatus().equalsIgnoreCase(newEmployee.getStatus())))
-        {
+        } else if (!(employee.getStatus().equalsIgnoreCase(newEmployee.getStatus()))) {
             employee.setStatus(newEmployee.getStatus());
         }
 
         // check if name changed
-        if (!(employee.getName().equalsIgnoreCase(newEmployee.getName())))
-        {
+        if (!(employee.getName().equalsIgnoreCase(newEmployee.getName()))) {
             employee.setName(newEmployee.getName());
         }
 
