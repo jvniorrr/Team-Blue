@@ -2,7 +2,6 @@ package com.callservice.Agent;
 
 import java.util.List;
 
-import org.hibernate.annotations.common.util.impl.Log_.logger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +38,7 @@ public class AgentController {
     public String home(Model model, @RequestParam(name = "status", required = false) String filter) {
 
         List<Agent> agents;
-        filter = filter.equalsIgnoreCase("loggedout") ? "logged-out" : filter; 
+        filter = filter != null ? (filter.equalsIgnoreCase("loggedout") ? "logged-out" : filter) : null; 
         // TODO: add SORT here so dots stay in relative position. Sort by date creation
         if (filter != null && validFilter(filter)) {
             agents = service.filterAll(filter);
