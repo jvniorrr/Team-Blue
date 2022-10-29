@@ -52,6 +52,7 @@ body {
     transition: 0.4s;
     background: rgba(57, 57, 57, 0.9);
     border-radius: 0rem 1rem 1rem 0rem;
+    z-index: 2;
 }
 /* END sidebar */
 
@@ -179,46 +180,30 @@ i.fa-circle {
 
 
 /* TOOLTIP */
- .tooltiptext {
+.tooltipType {
     position: relative;
-    z-index: 1;
-    /* top: 10%; */
-    left: 10%
+    display: inline-block
+}
 
-    /* styling */
-    min-widthL 50px;
-    background-color: #ff9;
-    color: black;
-    font-size: 10pt;
+.tooltipType .tooltiptext {
+    visibility: hidden;
+    background-color: #222222;
+    color: var(--secondary-color);
     border-radius: 3px;
     padding: 3px 10px 6px;
-    white-space: nowrap;
-  
-    visibility: hidden;
+    position: absolute;
+    top: -2rem;
+    right: -2rem;
+    min-width: 5rem;
+    text-align: center;
 }
 
 .tooltipType:hover .tooltiptext {
     visibility: visible;
 }
-/* .toolTipText {
-    position: initial;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #000;
-    color: #fff;
-    whitespace: nowrap;
-    padding: 10px 15px;
-    border-radius: 7px;
-} */
-/* .toolTipText::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 100%;
-    transform: translateX(-50%);
-    border: 15px solid;
-    border-color: #000 #0000 #0000 #0000;  
-} */
+
+
+
 
 
 /* ETC */

@@ -48,6 +48,7 @@ public class AgentController {
 
         model.addAttribute("agents", agents);
 
+        logger.info("Page has agents " + agents.size() + " agents");
         logger.info("Returning index page");
         return "home";
     }
