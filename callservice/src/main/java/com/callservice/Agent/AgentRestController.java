@@ -137,8 +137,8 @@ public class AgentRestController {
     // subscription
     @RequestMapping("/agents")
     public SseEmitter agents() {
-        // SseEmitter sseEmitter = new SseEmitter((long) (60000 * 1)); // add a 1 minute timeout
-        SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
+        SseEmitter sseEmitter = new SseEmitter((long) (60000 * 1)); // add a 1 minute timeout
+        // SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
 
         try {
             sseEmitter.send(SseEmitter.event().name("INIT"));
@@ -164,15 +164,15 @@ public class AgentRestController {
         // parse the incoming body request assure proper fields
 
         // store the incoming obj into db.
-        // try {
-        //     service.updateAgent(employee);
-        //     ret.put("message", "Successfully updated Database");
-        //     ret.put("response", "200");
-        //     ret.put("success", "true");
-        // } catch (Exception e) {
-        //     // TODO: handle exception
-        //     e.printStackTrace();
-        // }
+        try {
+            service.updateAgent(employee);
+            ret.put("message", "Successfully updated Database");
+            ret.put("response", "200");
+            ret.put("success", "true");
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
 
         for (SseEmitter emitter : emitters) {
             try {
