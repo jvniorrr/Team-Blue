@@ -39,26 +39,24 @@ public class AgentRestController {
     private List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
 
     @RequestMapping(value = "/gate", method = RequestMethod.POST)
-    public String createEmployee(@RequestBody Agent employee)
-    {
+    public String createEmployee(@RequestBody Agent employee) {
         return service.createEmployee(employee);
     }
 
     @RequestMapping(value = "/gate", method = RequestMethod.GET)
-    public List<Agent> readEmployees()
-    {
+    public List<Agent> readEmployees() {
         return service.readEmployees();
     }
 
     @RequestMapping(value = "/gate", method = RequestMethod.PUT)
-    public String updateEmployee(@RequestBody Agent employee)
-    {
+
+    public String updateEmployee(@RequestBody Agent employee) {
         return service.updateEmployee(employee);
     }
 
     @RequestMapping(value = "/gate", method = RequestMethod.DELETE)
-    public String deleteEmployee(@RequestBody Agent employee)
-    {
+
+    public String deleteEmployee(@RequestBody Agent employee) {
         return service.deleteEmployee(employee);
     }
 
@@ -92,8 +90,8 @@ public class AgentRestController {
      * @return information regarding what process occured.
      */
     @RequestMapping(value = "/gatej", method = RequestMethod.DELETE)
-    public Map<String, String> deleteAgent(@RequestBody Agent employee)
-    {
+
+    public Map<String, String> deleteAgent(@RequestBody Agent employee) {
         // System.out.println(employee);
         Map<String, String> ret = new HashMap<>();
         String update = service.deleteAgent(employee);
@@ -120,8 +118,7 @@ public class AgentRestController {
         }
     }
 
-    private Boolean validFilter(String filter) 
-    {
+    private Boolean validFilter(String filter) {
         if (filter.equalsIgnoreCase("available") ||
             filter.equalsIgnoreCase("busy") || 
             filter.equalsIgnoreCase("logged-out") || 
@@ -165,15 +162,15 @@ public class AgentRestController {
         // parse the incoming body request assure proper fields
 
         // store the incoming obj into db.
-        try {
-            service.updateAgent(employee);
-            ret.put("message", "Successfully updated Database");
-            ret.put("response", "200");
-            ret.put("success", "true");
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-        }
+        // try {
+        //     service.updateAgent(employee);
+        //     ret.put("message", "Successfully updated Database");
+        //     ret.put("response", "200");
+        //     ret.put("success", "true");
+        // } catch (Exception e) {
+        //     // TODO: handle exception
+        //     e.printStackTrace();
+        // }
 
         for (SseEmitter emitter : emitters) {
             try {

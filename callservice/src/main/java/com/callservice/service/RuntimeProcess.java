@@ -19,12 +19,10 @@ public class RuntimeProcess
     private EmployeeDatabase database;
 
     @Transactional
-    public String createEmployee(Agent employee)
-    {
+    public String createEmployee(Agent employee) {
         try
         {
-            if (database.findMaxId() == null)
-            {
+            if (database.findMaxId() == null) {
                 employee.setStore((Integer) 1);
                 database.save(employee);
                 return "employee saved";
@@ -35,32 +33,29 @@ public class RuntimeProcess
             }
             else 
             {
+
                 employee.setStore(database.findMaxId() + 1);
                 database.save(employee);
                 return "Employee saved";
             }
 
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             throw e;
         }
     }
 
-    public List<Agent> readEmployees()
-    {
+    public List<Agent> readEmployees() {
         return database.findAll();
     }
 
     @Transactional
-    public String updateEmployee(Agent employee)
-    {   
+
+    public String updateEmployee(Agent employee) {   
         employee.setStore(database.mapStore(employee.getId()));
 
-        if (database.existsById(employee.getStore()))
-        {
-            try
-            {
+        if (database.existsById(employee.getStore())) {
+            try {
                 Agent update = database.findById(employee.getStore()).get();
                 update.setStatus(employee.getStatus());
                 update.setName(employee.getName());
@@ -68,36 +63,30 @@ public class RuntimeProcess
                 database.save(update);
                 return "employee record updated";
             }
-            catch (Exception e)
-            {
+
+            catch (Exception e) {
                 throw e;
             }
         }
-        else
-        {
+        else {
             return "employee does not exist in database by id";
         }
     }
 
     @Transactional
-    public String deleteEmployee(Agent employee)
-    {
+    public String deleteEmployee(Agent employee) {
         employee.setStore(database.mapStore(employee.getId()));
 
-        if (database.existsById(employee.getStore()))
-        {
-            try
-            {
+        if (database.existsById(employee.getStore())) {
+            try {
                 database.delete(employee);
                 return "employee record deleted";
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 throw e;
             }
         }
-        else
-        {
+        else {
             return "employee record failed to delete";
         }
     }
@@ -120,9 +109,10 @@ public class RuntimeProcess
                 employee.setId(database.findMaxId() == null ? 1L : Long.valueOf(database.findMaxId() + 1));
                 database.save(employee);
                 return "employee created";
-                
+
             }
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             // TODO: handle exception
             throw e;
         }
@@ -139,12 +129,11 @@ public class RuntimeProcess
                 database.delete(agent);
                 return "employee record deleted";
             } 
-            catch (Exception e) 
-            {
+
+            catch (Exception e) {
                 throw e;
             }
-        } else 
-        {
+        } else {
             return "employee record not found";
         }
     }
@@ -172,7 +161,7 @@ public class RuntimeProcess
         if (employee.getStatus() == null) {
             // default
             employee.setStatus("available");
-        } else if (!(employee.getStatus().equalsIgnoreCase(newEmployee.getStatus()))) {
+        else if (!(employee.getStatus().equalsIgnoreCase(newEmployee.getStatus()))) {
             employee.setStatus(newEmployee.getStatus());
         }
 

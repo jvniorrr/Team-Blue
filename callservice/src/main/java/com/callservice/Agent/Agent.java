@@ -41,13 +41,17 @@ public class Agent {
         public String getIdString() { return this.idString; }
         public Date getUpdatedTS() { return this.updatedTS; }
         public Date getCreated() { return this.created; }
-        
     
         // Setters
         public void setName(String name) {
             this.name = name;
             setUpdatedTS(new Date());
         }
+    
+        public void setId(Long id) {
+            this.id = id;
+        }
+        
         public void setStatus(String status) {
             this.status = status;
             setUpdatedTS(new Date());
@@ -65,6 +69,6 @@ public class Agent {
         }
 
         public String toJson() {
-            return "{\"storeId\": " + this.storeId + ", \"name\": \"" + this.name + "\", \"id\": " + this.id + ", \"status\": \"" + this.status + ", \"ID\":\"" + this.idString + "\"}";
+            return "{\"storeId\": " + this.storeId + ", \"name\": \"" + this.name + "\", \"id\": " + this.id + ", \"status\": \"" + this.status + ", \"idString\":\"" + this.idString + "\"}";
         }
 }

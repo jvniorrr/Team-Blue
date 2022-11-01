@@ -62,6 +62,26 @@ public class AgentController {
             return true;
         } 
         else {
+        return "home";
+    }
+
+
+    @GetMapping("/ahmed")
+    public String testF() {
+        return "ahmedAgents";
+    }
+
+
+
+
+    private Boolean validFilter(String filter) {
+        if (filter.equalsIgnoreCase("available") ||
+                filter.equalsIgnoreCase("busy") ||
+                filter.equalsIgnoreCase("logged-out") ||
+                filter.equalsIgnoreCase("preview") ||
+                filter.equalsIgnoreCase("after")) {
+            return true;
+        } else {
             return false;
         }
     }
