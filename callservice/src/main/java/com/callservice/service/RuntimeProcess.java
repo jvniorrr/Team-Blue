@@ -27,10 +27,13 @@ public class RuntimeProcess
                 database.save(employee);
                 return "employee saved";
             }
-            else if (database.IdIfExists(employee.getId()) != null) {
+            else if (database.IdIfExists(employee.getId()) != null)
+            {
                 return "employee exists by id";
             }
-            else {
+            else 
+            {
+
                 employee.setStore(database.findMaxId() + 1);
                 database.save(employee);
                 return "Employee saved";
@@ -47,6 +50,7 @@ public class RuntimeProcess
     }
 
     @Transactional
+
     public String updateEmployee(Agent employee) {   
         employee.setStore(database.mapStore(employee.getId()));
 
@@ -59,6 +63,7 @@ public class RuntimeProcess
                 database.save(update);
                 return "employee record updated";
             }
+
             catch (Exception e) {
                 throw e;
             }
@@ -97,8 +102,6 @@ public class RuntimeProcess
             if (agent != null ) {
                 // updating agent
                 setData(agent, employee);
-
-                // database.save(agent);
                 return "employee record updated";
             } else {
                 // create new agent
@@ -106,6 +109,7 @@ public class RuntimeProcess
                 employee.setId(database.findMaxId() == null ? 1L : Long.valueOf(database.findMaxId() + 1));
                 database.save(employee);
                 return "employee created";
+
             }
         } 
         catch (Exception e) {
@@ -125,6 +129,7 @@ public class RuntimeProcess
                 database.delete(agent);
                 return "employee record deleted";
             } 
+
             catch (Exception e) {
                 throw e;
             }
@@ -156,7 +161,6 @@ public class RuntimeProcess
         if (employee.getStatus() == null) {
             // default
             employee.setStatus("available");
-        } 
         else if (!(employee.getStatus().equalsIgnoreCase(newEmployee.getStatus()))) {
             employee.setStatus(newEmployee.getStatus());
         }

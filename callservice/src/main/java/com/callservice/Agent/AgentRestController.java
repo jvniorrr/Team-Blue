@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +30,8 @@ import com.callservice.service.RuntimeProcess;
 @RestController
 public class AgentRestController {
 
+    Logger logger = LoggerFactory.getLogger(AgentRestController.class);
+
     @Autowired
     private RuntimeProcess service;
 
@@ -44,11 +49,13 @@ public class AgentRestController {
     }
 
     @RequestMapping(value = "/gate", method = RequestMethod.PUT)
+
     public String updateEmployee(@RequestBody Agent employee) {
         return service.updateEmployee(employee);
     }
 
     @RequestMapping(value = "/gate", method = RequestMethod.DELETE)
+
     public String deleteEmployee(@RequestBody Agent employee) {
         return service.deleteEmployee(employee);
     }
@@ -64,7 +71,9 @@ public class AgentRestController {
      */
     @RequestMapping(value = "/gatej", method = RequestMethod.GET)
     public Map<String, String> updateAgent(@RequestBody Agent employee) {
-        // System.out.println(employee);
+
+        logger.info("Incoming API Request -> View all by filter");
+
         Map<String, String> ret = new HashMap<>();
         String update = service.updateAgent(employee);
 
@@ -81,6 +90,7 @@ public class AgentRestController {
      * @return information regarding what process occured.
      */
     @RequestMapping(value = "/gatej", method = RequestMethod.DELETE)
+
     public Map<String, String> deleteAgent(@RequestBody Agent employee) {
         // System.out.println(employee);
         Map<String, String> ret = new HashMap<>();
@@ -100,11 +110,10 @@ public class AgentRestController {
      */
     @RequestMapping(value = "/filter", method = RequestMethod.GET)
     public List<Agent> filterAgents(@RequestParam(name = "status", required = false) String filter) {
-
+        logger.info("Incoming API Request -> View all by filter");
         if (filter != null && validFilter(filter) == true) {
             return service.filterAll(filter);
-        }
-        else {
+        } else {
             return service.readEmployees();
         }
     }
@@ -126,8 +135,8 @@ public class AgentRestController {
     // subscription
     @RequestMapping("/agents")
     public SseEmitter agents() {
-        // SseEmitter sseEmitter = new SseEmitter((long) (60000 * 1)); // add a 1 minute timeout
-        SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
+        SseEmitter sseEmitter = new SseEmitter((long) (60000 * 1)); // add a 1 minute timeout
+        // SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
 
         try {
             sseEmitter.send(SseEmitter.event().name("INIT"));
@@ -139,13 +148,15 @@ public class AgentRestController {
         sseEmitter.onCompletion(() -> emitters.remove(sseEmitter));
         sseEmitter.onTimeout(() -> emitters.remove(sseEmitter));
         emitters.add(sseEmitter);
-
+        logger.info("New Emitter created");
+        
         return sseEmitter;
     }
 
     // send events all clients
     @PostMapping(value = "/update")
     public Map<String, String> sseUpdateAgent(@RequestBody Agent employee) {
+        logger.info("New Emitter created");
         Map<String, String> ret = new HashMap<>();
 
         // parse the incoming body request assure proper fields

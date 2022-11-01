@@ -78,13 +78,19 @@ $(document).ready(() => {
     function createElement(agentData) {
         const nodeElement = document.createElement("i");
         const element = $(nodeElement);
-        element.addClass("fa-solid fa-circle agent-dot");
+        // <span th:attr="class='tooltiptext'" th:utext="${agent.name +  ' <br>' +  agent.status}"></span>
+        const spanElement = document.createElement("span");
+        spanElement.classList.add("tooltiptext");
+        spanElement.innerHTML  = `${agentData.name} <br> ${agentData.status}`;
+
+        element.addClass("fa-solid fa-circle agent-dot tooltipType");
         element.addClass(agentData.status);
 
         // attributes to be used when hovering
         element.attr("data-user-id", agentData.idString);
         element.attr("data-user-status", agentData.status);
 
+        element.append(spanElement);
         // TODO: Add name to title for hover effect
         // temp code below will display this when hovered.
         // element.attr("title", `${agentData.id}\n${agentData.status}`);

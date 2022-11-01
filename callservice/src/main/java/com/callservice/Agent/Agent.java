@@ -34,13 +34,13 @@ public class Agent {
     
     
         // Getters
-        public String getName() { return name; }
-        public Long getId() { return id; }
-        public String getStatus() { return status; }
-        public Integer getStore() { return storeId; }
-        public String getIdString() { return idString; }
-        public Date getUpdatedTS() { return updatedTS; }
-        public Date getCreated() { return created; }
+        public String getName() { return this.name; }
+        public Long getId() { return this.id; }
+        public String getStatus() { return this.status; }
+        public Integer getStore() { return this.storeId; }
+        public String getIdString() { return this.idString; }
+        public Date getUpdatedTS() { return this.updatedTS; }
+        public Date getCreated() { return this.created; }
     
         // Setters
         public void setName(String name) {
@@ -51,26 +51,16 @@ public class Agent {
         public void setId(Long id) {
             this.id = id;
         }
-    
+        
         public void setStatus(String status) {
             this.status = status;
             setUpdatedTS(new Date());
         }
-        
-        public void setStore(Integer storeId) {
-            this.storeId = storeId;
-        }
-
-        public void setIdString(String idString) {
-            this.idString = idString;
-        }
-
-        private void setUpdatedTS(Date updatedTS) {
-            this.updatedTS = updatedTS;
-        }
-        public void setCreated(Date created) {
-            this.created = created;
-        }
+        public void setId(Long id) { this.id = id; }
+        public void setStore(Integer storeId) { this.storeId = storeId; }
+        public void setIdString(String idString) { this.idString = idString; }
+        private void setUpdatedTS(Date updatedTS) { this.updatedTS = updatedTS; }
+        public void setCreated(Date created) { this.created = created; }
 
         // TO STRING
         @Override
@@ -81,5 +71,4 @@ public class Agent {
         public String toJson() {
             return "{\"storeId\": " + this.storeId + ", \"name\": \"" + this.name + "\", \"id\": " + this.id + ", \"status\": \"" + this.status + ", \"idString\":\"" + this.idString + "\"}";
         }
-        
 }
