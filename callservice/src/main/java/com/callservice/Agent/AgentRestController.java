@@ -63,7 +63,7 @@ public class AgentRestController {
 
 
 
-    // JUNIOR
+    // JUNIOR CRUD
     /**
      * Method to update an agent given a UUID (String), Status (String), and Name (String)
      * @param employee
@@ -102,6 +102,7 @@ public class AgentRestController {
         return ret;
         // return service.deleteAgent(employee);
     }
+    // JUNIOR CRUD
 
     /**
      * Method to filter out employees based off of a specific filter string
@@ -148,7 +149,7 @@ public class AgentRestController {
         sseEmitter.onCompletion(() -> emitters.remove(sseEmitter));
         sseEmitter.onTimeout(() -> emitters.remove(sseEmitter));
         emitters.add(sseEmitter);
-        logger.info("New Emitter created");
+        // logger.info("New Emitter created");
         
         return sseEmitter;
     }
@@ -156,21 +157,21 @@ public class AgentRestController {
     // send events all clients
     @PostMapping(value = "/update")
     public Map<String, String> sseUpdateAgent(@RequestBody Agent employee) {
-        logger.info("New Emitter created");
+        // logger.info("New Emitter created");
         Map<String, String> ret = new HashMap<>();
 
         // parse the incoming body request assure proper fields
 
         // store the incoming obj into db.
-        // try {
-        //     service.updateAgent(employee);
-        //     ret.put("message", "Successfully updated Database");
-        //     ret.put("response", "200");
-        //     ret.put("success", "true");
-        // } catch (Exception e) {
-        //     // TODO: handle exception
-        //     e.printStackTrace();
-        // }
+        try {
+            service.updateAgent(employee);
+            ret.put("message", "Successfully updated Database");
+            ret.put("response", "200");
+            ret.put("success", "true");
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
 
         for (SseEmitter emitter : emitters) {
             try {
@@ -182,7 +183,6 @@ public class AgentRestController {
                 ret.put("success", "true");
                 
             } catch (IOException e) {
-                // TODO: Handle IOException for broken pipes correctly to have a reconnection
 
                 // set return attibutes / keys
                 ret.put("message", "IO Exception");
