@@ -41,6 +41,7 @@ public class Agent {
         public String getIdString() { return this.idString; }
         public Date getUpdatedTS() { return this.updatedTS; }
         public Date getCreated() { return this.created; }
+        
     
         // Setters
         public void setName(String name) {
