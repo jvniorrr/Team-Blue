@@ -38,7 +38,8 @@ public class AgentController {
 
         List<Agent> agents;
         filter = filter != null ? (filter.equalsIgnoreCase("loggedout") ? "logged-out" : filter) : null; 
-        // TODO: add SORT here so dots stay in relative position. Sort by date creation
+
+        // TODO: Sort by date created
         if (filter != null && validFilter(filter)) {
             agents = service.filterAll(filter);
         } else {
@@ -62,28 +63,7 @@ public class AgentController {
             return true;
         } 
         else {
-        return "home";
-    }
-
-
-    @GetMapping("/ahmed")
-    public String testF() {
-        return "ahmedAgents";
-    }
-
-
-
-
-    private Boolean validFilter(String filter) {
-        if (filter.equalsIgnoreCase("available") ||
-                filter.equalsIgnoreCase("busy") ||
-                filter.equalsIgnoreCase("logged-out") ||
-                filter.equalsIgnoreCase("preview") ||
-                filter.equalsIgnoreCase("after")) {
-            return true;
-        } else {
             return false;
         }
     }
-
 }

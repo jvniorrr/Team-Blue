@@ -161,7 +161,7 @@ public class RuntimeProcess
         if (employee.getStatus() == null) {
             // default
             employee.setStatus("available");
-        else if (!(employee.getStatus().equalsIgnoreCase(newEmployee.getStatus()))) {
+        } else if (!(employee.getStatus().equalsIgnoreCase(newEmployee.getStatus()))) {
             employee.setStatus(newEmployee.getStatus());
         }
 
