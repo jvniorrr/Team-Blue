@@ -1,4 +1,4 @@
-package com.callservice.callservice.Agent;
+package com.callservice.Agent;
 
 import java.util.Date;
 

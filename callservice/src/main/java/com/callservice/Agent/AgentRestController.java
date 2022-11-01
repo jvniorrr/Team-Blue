@@ -1,4 +1,4 @@
-package com.callservice.callservice.Agent;
+package com.callservice.Agent;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import com.callservice.callservice.service.RuntimeProcess;
+import com.callservice.service.RuntimeProcess;
 
 
 /**

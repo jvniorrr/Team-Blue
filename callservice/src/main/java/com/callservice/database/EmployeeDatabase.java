@@ -1,4 +1,4 @@
-package com.callservice.callservice.database;
+package com.callservice.database;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.callservice.callservice.Agent.Agent;
+import com.callservice.Agent.Agent;
 
 @Repository
 public interface EmployeeDatabase extends JpaRepository<Agent, Integer>

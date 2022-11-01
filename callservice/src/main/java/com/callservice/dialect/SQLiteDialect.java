@@ -1,4 +1,4 @@
-package com.callservice.callservice.dialect;
+package com.callservice.dialect;
 import java.sql.Types;
 
 import org.hibernate.dialect.Dialect;

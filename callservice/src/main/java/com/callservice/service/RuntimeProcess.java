@@ -1,4 +1,4 @@
-package com.callservice.callservice.service;
+package com.callservice.service;
 
 import java.util.List;
 import java.util.UUID;
@@ -8,8 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.callservice.callservice.Agent.Agent;
-import com.callservice.callservice.database.EmployeeDatabase;
+import com.callservice.Agent.Agent;
+import com.callservice.database.EmployeeDatabase;
 
 
 @Service
