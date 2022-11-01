@@ -38,6 +38,7 @@ public class AgentController {
 
         List<Agent> agents;
         filter = filter != null ? (filter.equalsIgnoreCase("loggedout") ? "logged-out" : filter) : null; 
+
         // TODO: Sort by date created
         if (filter != null && validFilter(filter)) {
             agents = service.filterAll(filter);

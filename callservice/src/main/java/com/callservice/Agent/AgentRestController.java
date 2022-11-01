@@ -149,6 +149,7 @@ public class AgentRestController {
         sseEmitter.onCompletion(() -> emitters.remove(sseEmitter));
         sseEmitter.onTimeout(() -> emitters.remove(sseEmitter));
         emitters.add(sseEmitter);
+
         // logger.info("New Emitter created");
         
         return sseEmitter;
@@ -157,6 +158,7 @@ public class AgentRestController {
     // send events all clients
     @PostMapping(value = "/update")
     public Map<String, String> sseUpdateAgent(@RequestBody Agent employee) {
+
         // logger.info("New Emitter created");
         Map<String, String> ret = new HashMap<>();
 
