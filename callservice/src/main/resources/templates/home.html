@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/css/styles.css"> 
 
     <script src="/webjars/jquery/jquery.min.js"></script>
-    <script src="/js/app2.js" defer></script>
+    <script src="/js/index.js" defer></script>
     <script src="/js/sidebar.js" defer></script>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,48 +28,49 @@
             </a>
     </nav>
     <!--/* NAVBAR */-->
+    <nav id="sidebar" class="sidebar sidebar-expand d-flex flex-column align-item-start">
+        <div id="state-color-text" class="display-6 font-weight-bold mx-auto">
+            State Colors
+        </div>
+
+    <ul class="navbar-nav d-flex flex-column mt-5 w-100">
+        <li class="nav-item w-100 d-flex flex-row justify-content-between state-color align-items-center">
+            <i class="fa-solid fa-circle fa-xl state-color-dot available"></i>
+
+            <div href="#" class="nav-link  pl-4 available">
+                Available
+            </div>
+        </li>
+        <li class="nav-item w-100 d-flex flex-row justify-content-between state-color align-items-center">
+            <i class="fa-solid fa-circle fa-xl state-color-dot busy"></i>
+            <div href="#" class="nav-link text-light pl-4 busy">
+                Busy
+            </div>
+        </li>
+        <li class="nav-item w-100 d-flex flex-row justify-content-between state-color align-items-center">
+            <i class="fa-solid fa-circle fa-xl state-color-dot after"></i>
+            <div href="#" class="nav-link text-light pl-4 after">
+                After-Work
+            </div>
+        </li>
+        <li class="nav-item w-100 d-flex flex-row justify-content-between state-color align-items-center">
+            <i class="fa-solid fa-circle fa-xl state-color-dot preview"></i>
+            <div href="#" class="nav-link text-light pl-4 preview ">
+                Preview
+            </div>
+        </li>
+        <li class="nav-item w-100 d-flex flex-row justify-content-between state-color align-items-center">
+            <i class="fa-solid fa-circle fa-xl state-color-dot logged-out"></i>
+            <div href="#" class="nav-link text-light pl-4 logged-out">
+                Logged Out
+            </div>
+        </li>
+    </ul>
+</nav>
 
 
     <!--/* CONTENT */-->
-    <nav id="sidebar" class="sidebar sidebar-expand d-flex flex-column align-item-start">
-            <div id="state-color-text" class="display-6 font-weight-bold mx-auto">
-                State Colors
-            </div>
-
-        <ul class="navbar-nav d-flex flex-column mt-5 w-100">
-            <li class="nav-item w-100 d-flex flex-row justify-content-between state-color align-items-center">
-                <i class="fa-solid fa-circle fa-xl state-color-dot available"></i>
-
-                <div href="#" class="nav-link  pl-4 available">
-                    Available
-                </div>
-            </li>
-            <li class="nav-item w-100 d-flex flex-row justify-content-between state-color align-items-center">
-                <i class="fa-solid fa-circle fa-xl state-color-dot busy"></i>
-                <div href="#" class="nav-link text-light pl-4 busy">
-                    Busy
-                </div>
-            </li>
-            <li class="nav-item w-100 d-flex flex-row justify-content-between state-color align-items-center">
-                <i class="fa-solid fa-circle fa-xl state-color-dot after"></i>
-                <div href="#" class="nav-link text-light pl-4 after">
-                    After-Work
-                </div>
-            </li>
-            <li class="nav-item w-100 d-flex flex-row justify-content-between state-color align-items-center">
-                <i class="fa-solid fa-circle fa-xl state-color-dot preview"></i>
-                <div href="#" class="nav-link text-light pl-4 preview ">
-                    Preview
-                </div>
-            </li>
-            <li class="nav-item w-100 d-flex flex-row justify-content-between state-color align-items-center">
-                <i class="fa-solid fa-circle fa-xl state-color-dot logged-out"></i>
-                <div href="#" class="nav-link text-light pl-4 logged-out">
-                    Logged Out
-                </div>
-            </li>
-        </ul>
-    </nav>
+    
     <section class="p-4 my-container">
         <button class="btn display-6" id="menu-btn">
             <i class="fa-solid fa-chevron-right fa-2xl"></i>
@@ -81,8 +82,24 @@
             <div class="row">
                 <!--/* GRID RENDER */-->
                 <div id="dots-grid"  class="">
-                         <i th:each="agent : ${agents}" th:attr="class='fa-solid fa-circle agent-dot '+${agent.status}, data-username=${agent.name}, data-user-id=${agent.idString == null ? agent.id: agent.idString}, data-user-status=${agent.status}">
-                         </i>                        
+                    <!-- <span th:each="agent : ${agents}" class="tooltip">
+                        <span class="toolTipText" th:text="${agent.name + '&#10;' + agent.status}" style="display: none;"></span>
+                        <i  th:attr="class='fa-solid fa-circle agent-dot '+${agent.status}, data-username=${agent.name}, data-user-id=${agent.idString == null ? agent.id: agent.idString}, data-user-status=${agent.status}">
+                        </i>
+
+                    </span> -->
+                        <!-- <i  class="fa-solid fa-circle agent-dot busy available tooltipType">
+                            <span class="tooltiptext">First Last <br> STATUS</span>
+                        </i>
+                        <i  class="fa-solid fa-circle agent-dot busy available tooltipType">
+                            <span class="tooltiptext">First Last <br> STATUS</span>
+                        </i> -->
+
+                    <i th:each="agent : ${agents}" th:attr="class='fa-solid fa-circle agent-dot tooltipType '+${agent.status}, data-username=${agent.name}, data-user-id=${agent.idString == null ? agent.id: agent.idString}, data-user-status=${agent.status}">
+                        <span th:attr="class='tooltiptext'" th:utext="${agent.name +  ' <br>' +  agent.status}"></span>
+                        
+                    </i>
+                        
                 
                         <!-- <div class="agent-dot-test">
                         </div> -->

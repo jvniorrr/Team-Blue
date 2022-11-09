@@ -1,4 +1,4 @@
-package com.callservice.callservice;
+package com.callservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

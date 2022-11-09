@@ -1,4 +1,4 @@
-package com.callservice.callservice.Agent;
+package com.callservice.Agent;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -17,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import com.callservice.callservice.service.RuntimeProcess;
+import com.callservice.service.RuntimeProcess;
 
 
 /**
@@ -27,6 +30,8 @@ import com.callservice.callservice.service.RuntimeProcess;
 @RestController
 public class AgentRestController {
 
+    Logger logger = LoggerFactory.getLogger(AgentRestController.class);
+
     @Autowired
     private RuntimeProcess service;
 
@@ -34,42 +39,41 @@ public class AgentRestController {
     private List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
 
     @RequestMapping(value = "/gate", method = RequestMethod.POST)
-    public String createEmployee(@RequestBody Agent employee)
-    {
+    public String createEmployee(@RequestBody Agent employee) {
         return service.createEmployee(employee);
     }
 
     @RequestMapping(value = "/gate", method = RequestMethod.GET)
-    public List<Agent> readEmployees()
-    {
+    public List<Agent> readEmployees() {
         return service.readEmployees();
     }
 
     @RequestMapping(value = "/gate", method = RequestMethod.PUT)
-    public String updateEmployee(@RequestBody Agent employee)
-    {
+
+    public String updateEmployee(@RequestBody Agent employee) {
         return service.updateEmployee(employee);
     }
 
     @RequestMapping(value = "/gate", method = RequestMethod.DELETE)
-    public String deleteEmployee(@RequestBody Agent employee)
-    {
+
+    public String deleteEmployee(@RequestBody Agent employee) {
         return service.deleteEmployee(employee);
     }
 
 
 
 
-    // JUNIOR
+    // JUNIOR CRUD
     /**
      * Method to update an agent given a UUID (String), Status (String), and Name (String)
      * @param employee
      * @return information regarding what process occured.
      */
     @RequestMapping(value = "/gatej", method = RequestMethod.GET)
-    public Map<String, String> updateAgent(@RequestBody Agent employee)
-    {
-        // System.out.println(employee);
+    public Map<String, String> updateAgent(@RequestBody Agent employee) {
+
+        logger.info("Incoming API Request -> View all by filter");
+
         Map<String, String> ret = new HashMap<>();
         String update = service.updateAgent(employee);
 
@@ -86,8 +90,8 @@ public class AgentRestController {
      * @return information regarding what process occured.
      */
     @RequestMapping(value = "/gatej", method = RequestMethod.DELETE)
-    public Map<String, String> deleteAgent(@RequestBody Agent employee)
-    {
+
+    public Map<String, String> deleteAgent(@RequestBody Agent employee) {
         // System.out.println(employee);
         Map<String, String> ret = new HashMap<>();
         String update = service.deleteAgent(employee);
@@ -98,6 +102,7 @@ public class AgentRestController {
         return ret;
         // return service.deleteAgent(employee);
     }
+    // JUNIOR CRUD
 
     /**
      * Method to filter out employees based off of a specific filter string
@@ -105,21 +110,16 @@ public class AgentRestController {
      * @return
      */
     @RequestMapping(value = "/filter", method = RequestMethod.GET)
-    public List<Agent> filterAgents(@RequestParam(name = "status", required = false) String filter)
-    {
-
-        if (filter != null && validFilter(filter) == true)
-        {
+    public List<Agent> filterAgents(@RequestParam(name = "status", required = false) String filter) {
+        logger.info("Incoming API Request -> View all by filter");
+        if (filter != null && validFilter(filter) == true) {
             return service.filterAll(filter);
-        }
-        else 
-        {
+        } else {
             return service.readEmployees();
         }
     }
 
-    private Boolean validFilter(String filter) 
-    {
+    private Boolean validFilter(String filter) {
         if (filter.equalsIgnoreCase("available") ||
             filter.equalsIgnoreCase("busy") || 
             filter.equalsIgnoreCase("logged-out") || 
@@ -136,8 +136,8 @@ public class AgentRestController {
     // subscription
     @RequestMapping("/agents")
     public SseEmitter agents() {
-        // SseEmitter sseEmitter = new SseEmitter((long) (60000 * 1)); // add a 1 minute timeout
-        SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
+        SseEmitter sseEmitter = new SseEmitter((long) (60000 * 1)); // add a 1 minute timeout
+        // SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
 
         try {
             sseEmitter.send(SseEmitter.event().name("INIT"));
@@ -150,26 +150,30 @@ public class AgentRestController {
         sseEmitter.onTimeout(() -> emitters.remove(sseEmitter));
         emitters.add(sseEmitter);
 
+        // logger.info("New Emitter created");
+        
         return sseEmitter;
     }
 
     // send events all clients
     @PostMapping(value = "/update")
     public Map<String, String> sseUpdateAgent(@RequestBody Agent employee) {
+
+        // logger.info("New Emitter created");
         Map<String, String> ret = new HashMap<>();
 
         // parse the incoming body request assure proper fields
 
         // store the incoming obj into db.
-        // try {
-        //     service.updateAgent(employee);
-        //     ret.put("message", "Successfully updated Database");
-        //     ret.put("response", "200");
-        //     ret.put("success", "true");
-        // } catch (Exception e) {
-        //     // TODO: handle exception
-        //     e.printStackTrace();
-        // }
+        try {
+            service.updateAgent(employee);
+            ret.put("message", "Successfully updated Database");
+            ret.put("response", "200");
+            ret.put("success", "true");
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
 
         for (SseEmitter emitter : emitters) {
             try {
@@ -181,7 +185,6 @@ public class AgentRestController {
                 ret.put("success", "true");
                 
             } catch (IOException e) {
-                // TODO: Handle IOException for broken pipes correctly to have a reconnection
 
                 // set return attibutes / keys
                 ret.put("message", "IO Exception");
