@@ -19,11 +19,11 @@ import javax.persistence.Table;
 @Table(name="AGENT_TBL")
 public class AgentEntity {
         // Fields
-        @Id
         // @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
         // @Basic(optional = false)
         // @SequenceGenerator(name = "id_Sequence", sequenceName = "ID_SEQ")
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "storeId", unique = true, nullable = false)
         private Integer storeId;    //Id for referencing in DB
 

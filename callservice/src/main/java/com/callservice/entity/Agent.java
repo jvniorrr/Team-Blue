@@ -1,9 +1,14 @@
-package com.callservice.Agent;
+package com.callservice.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+
 
 /**
  * Class Object to hold Agents information
@@ -13,14 +18,18 @@ import javax.persistence.Id;
 public class Agent {
         // Fields
         @Id
+        @Column(name = "storeId")
         private Integer storeId;    //Id for referencing in DB
 
         private String name, status, idString;
+        // @GeneratedValue(strategy = GenerationType.AUTO)
+        @Column(nullable = true)
         private Long id;
 
         // timestamps
         private Date created = new Date(), updatedTS = null;
-            
+
+
         // Constructors
         public Agent() {
         }
@@ -31,7 +40,7 @@ public class Agent {
             this.status = status;
             this.idString = idString;
         }
-    
+        
     
         // Getters
         public String getName() { return this.name; }
@@ -61,10 +70,10 @@ public class Agent {
         // TO STRING
         @Override
         public String toString() {
-            return "Agent [id=" + id + ", name=" + name + ", status=" + status + "idString="+ idString + "]";
+            return "Agent [id=" + id + ", name=" + name + ", status=" + status + ", idString="+ idString + "]";
         }
 
         public String toJson() {
-            return "{\"storeId\": " + this.storeId + ", \"name\": \"" + this.name + "\", \"id\": " + this.id + ", \"status\": \"" + this.status + ", \"idString\":\"" + this.idString + "\"}";
+            return "{\"storeId\": " + this.storeId + ", \"name\": \"" + this.name + "\", \"id\": " + this.id + ", \"status\": \"" + this.status + "\", \"idString\":\"" + this.idString + "\"}";
         }
 }
