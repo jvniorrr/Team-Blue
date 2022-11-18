@@ -1,6 +1,7 @@
-package com.callservice.Agent;
+package com.callservice.database;
 import java.sql.*;
 import java.text.*;
+import com.callservice.entity.Agent;
 
 public class AgentDatabase {
 

@@ -1,44 +1,56 @@
-package com.callservice.Agent;
+package com.callservice.entity;
 
 import java.util.Date;
-
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 
 /**
  * Class Object to hold Agents information
  * - Stores Name, ID, and a status. Time param will be set when setting values in Database. 
  */
 @Entity
-public class Agent {
+@Table(name="AGENT_TBL")
+public class AgentEntity {
         // Fields
+        // @GeneratedValue(strategy = GenerationType.IDENTITY)
+        // @Basic(optional = false)
+        // @SequenceGenerator(name = "id_Sequence", sequenceName = "ID_SEQ")
         @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "storeId", unique = true, nullable = false)
         private Integer storeId;    //Id for referencing in DB
 
-        private String name, status, idString;
-        private Long id;
+        private String name, status;
+        @Column(unique = true)
+        private String id;
 
         // timestamps
         private Date created = new Date(), updatedTS = null;
-            
+
+
         // Constructors
-        public Agent() {
+        public AgentEntity() {
         }
     
-        public Agent(String name, Long id,  String status, String idString) {
+        public AgentEntity(String name,  String status, String id) {
             this.name = name;
-            this.id = id;
             this.status = status;
-            this.idString = idString;
+            this.id = id;
         }
-    
+        
     
         // Getters
         public String getName() { return this.name; }
-        public Long getId() { return this.id; }
         public String getStatus() { return this.status; }
         public Integer getStore() { return this.storeId; }
-        public String getIdString() { return this.idString; }
+        public String getId() { return this.id; }
         public Date getUpdatedTS() { return this.updatedTS; }
         public Date getCreated() { return this.created; }
     
@@ -52,19 +64,18 @@ public class Agent {
             this.status = status;
             setUpdatedTS(new Date());
         }
-        public void setId(Long id) { this.id = id; }
         public void setStore(Integer storeId) { this.storeId = storeId; }
-        public void setIdString(String idString) { this.idString = idString; }
+        public void setId(String id) { this.id = id; }
         private void setUpdatedTS(Date updatedTS) { this.updatedTS = updatedTS; }
         public void setCreated(Date created) { this.created = created; }
 
         // TO STRING
         @Override
         public String toString() {
-            return "Agent [id=" + id + ", name=" + name + ", status=" + status + "idString="+ idString + "]";
+            return "Agent [id=" + this.id + ", name=" + this.name + ", status=" + this.status + "]";
         }
 
         public String toJson() {
-            return "{\"storeId\": " + this.storeId + ", \"name\": \"" + this.name + "\", \"id\": " + this.id + ", \"status\": \"" + this.status + ", \"idString\":\"" + this.idString + "\"}";
+            return "{\"storeId\": " + this.storeId + ", \"name\": \"" + this.name + "\", \"id\": " + this.id + ", \"status\": \"" + this.status + "\"}";
         }
 }

@@ -1,4 +1,4 @@
-package com.callservice.Agent;
+package com.callservice.controller;
 
 import java.util.List;
 
@@ -10,7 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import com.callservice.entity.AgentEntity;
+import com.callservice.service.AgentService;
 import com.callservice.service.RuntimeProcess;
 
 
@@ -26,6 +27,9 @@ public class AgentController {
     @Autowired
     private RuntimeProcess service;
 
+    @Autowired
+    private AgentService entityService;
+
     public AgentController() {
     }
     
@@ -36,14 +40,14 @@ public class AgentController {
     @GetMapping({"/", "/home"})
     public String home(Model model, @RequestParam(name = "status", required = false) String filter) {
 
-        List<Agent> agents;
+        List<AgentEntity> agents;
         filter = filter != null ? (filter.equalsIgnoreCase("loggedout") ? "logged-out" : filter) : null; 
 
         // TODO: Sort by date created
         if (filter != null && validFilter(filter)) {
-            agents = service.filterAll(filter);
+            agents = entityService.filterEntities(filter);
         } else {
-            agents = service.readEmployees();
+            agents = entityService.getEntities();
         }
 
         model.addAttribute("agents", agents);
