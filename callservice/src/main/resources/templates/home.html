@@ -95,7 +95,7 @@
                             <span class="tooltiptext">First Last <br> STATUS</span>
                         </i> -->
 
-                    <i th:each="agent : ${agents}" th:attr="class='fa-solid fa-circle agent-dot tooltipType '+${agent.status}, data-username=${agent.name}, data-user-id=${agent.idString == null ? agent.id: agent.idString}, data-user-status=${agent.status}">
+                    <i th:each="agent : ${agents}" th:attr="class='fa-solid fa-circle agent-dot tooltipType '+${agent.status}, data-username=${agent.name}, data-user-id=${agent.id}, data-user-status=${agent.status}">
                         <span th:attr="class='tooltiptext'" th:utext="${agent.name +  ' <br>' +  agent.status}"></span>
                         
                     </i>
