@@ -1,16 +1,19 @@
-package com.callservice.Agent;
+package com.callservice.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
-
+import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-
+import com.callservice.entity.Agent;
+import com.callservice.entity.AgentEntity;
+import com.callservice.service.AgentService;
 import com.callservice.service.RuntimeProcess;
 
 
@@ -35,6 +40,11 @@ public class AgentRestController {
     @Autowired
     private RuntimeProcess service;
 
+    @Autowired
+    private AgentService agentService;
+
+    private List<AgentEntity> allEntities = new ArrayList<>();
+
     // set up emitter to transmit calls
     private List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
 
@@ -49,16 +59,16 @@ public class AgentRestController {
     }
 
     @RequestMapping(value = "/gate", method = RequestMethod.PUT)
-
     public String updateEmployee(@RequestBody Agent employee) {
         return service.updateEmployee(employee);
     }
 
     @RequestMapping(value = "/gate", method = RequestMethod.DELETE)
-
     public String deleteEmployee(@RequestBody Agent employee) {
         return service.deleteEmployee(employee);
     }
+
+
 
 
 
@@ -70,16 +80,18 @@ public class AgentRestController {
      * @return information regarding what process occured.
      */
     @RequestMapping(value = "/gatej", method = RequestMethod.GET)
-    public Map<String, String> updateAgent(@RequestBody Agent employee) {
+    public Map<String, String> updateAgent(@RequestBody AgentEntity employee) {
 
-        logger.info("Incoming API Request -> View all by filter");
+        logger.info("Incoming API Request -> Update entity");
 
         Map<String, String> ret = new HashMap<>();
-        String update = service.updateAgent(employee);
+        // String update = agentService.entityRequest(employee);
+        // System.out.println(update);
+        String update = agentService.saveEntity(employee);
 
         ret.put("message", update);
         ret.put("status", "200");
-        ret.put("success", (update.equalsIgnoreCase("employee record updated") || update.equalsIgnoreCase("employee created") ? "true" : "false"));
+        ret.put("success", (update.equalsIgnoreCase("updated entity") || update.equalsIgnoreCase("created entity") ? "true" : "false"));
         // return service.updateAgent(employee);
         return ret;
     }
@@ -90,7 +102,6 @@ public class AgentRestController {
      * @return information regarding what process occured.
      */
     @RequestMapping(value = "/gatej", method = RequestMethod.DELETE)
-
     public Map<String, String> deleteAgent(@RequestBody Agent employee) {
         // System.out.println(employee);
         Map<String, String> ret = new HashMap<>();
@@ -105,7 +116,7 @@ public class AgentRestController {
     // JUNIOR CRUD
 
     /**
-     * Method to filter out employees based off of a specific filter string
+     * Method to filter out employees based off of a specific filter string. API CALL
      * @param filter
      * @return
      */
@@ -119,6 +130,7 @@ public class AgentRestController {
         }
     }
 
+    /** Method to verify user inputted a valid filter param */
     private Boolean validFilter(String filter) {
         if (filter.equalsIgnoreCase("available") ||
             filter.equalsIgnoreCase("busy") || 
@@ -133,7 +145,10 @@ public class AgentRestController {
         }
     }
 
-    // subscription
+    /**
+     * Server Event Initializer, creates new Emitters when a new request is sent on our frontend.
+     * @return
+     */
     @RequestMapping("/agents")
     public SseEmitter agents() {
         SseEmitter sseEmitter = new SseEmitter((long) (60000 * 1)); // add a 1 minute timeout
@@ -155,26 +170,18 @@ public class AgentRestController {
         return sseEmitter;
     }
 
-    // send events all clients
+    /**
+     * REST API call for client to send in entities and their status'
+     * @param employee
+     * @return
+     */
     @PostMapping(value = "/update")
-    public Map<String, String> sseUpdateAgent(@RequestBody Agent employee) {
+    public Map<String, String> sseUpdateAgent(@RequestBody com.callservice.entity.AgentEntity employee) {
 
         // logger.info("New Emitter created");
         Map<String, String> ret = new HashMap<>();
 
         // parse the incoming body request assure proper fields
-
-        // store the incoming obj into db.
-        try {
-            service.updateAgent(employee);
-            ret.put("message", "Successfully updated Database");
-            ret.put("response", "200");
-            ret.put("success", "true");
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-        }
-
         for (SseEmitter emitter : emitters) {
             try {
                 // can return a msg upon successfull call
@@ -202,6 +209,21 @@ public class AgentRestController {
 
             }
         }
+
+        allEntities.add(employee);
+        if (allEntities.size() >= 100) {
+            try {
+                CompletableFuture<List<AgentEntity>> future = agentService.saveUsers(allEntities);
+                List<AgentEntity> entities = future.get(2, TimeUnit.SECONDS);
+                // logger.info("Successfully saved all users: {}", entities);
+                logger.info("Successfully saved all users");
+                allEntities.clear();
+            } catch (Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            }
+        }
+
         return ret;
     }
 
