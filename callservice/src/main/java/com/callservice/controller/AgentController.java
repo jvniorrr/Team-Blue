@@ -17,7 +17,8 @@ import com.callservice.service.RuntimeProcess;
 
 
 /**
- * Controller to handle rendering web pages using Thymeleaf; essentially though pure html css and js.
+ * Controller to handle rendering web pages using Thymeleaf; essentially though pure html css and
+ * js.
  */
 @Controller
 public class AgentController {
@@ -30,18 +31,19 @@ public class AgentController {
     @Autowired
     private AgentService entityService;
 
-    public AgentController() {
-    }
-    
+    public AgentController() {}
+
     /**
-     * GET  /  -> show the index page.
+     * GET / -> show the index page.
      */
 
     @GetMapping({"/", "/home"})
-    public String home(Model model, @RequestParam(name = "status", required = false) String filter) {
+    public String home(Model model,
+            @RequestParam(name = "status", required = false) String filter) {
 
         List<AgentEntity> agents;
-        filter = filter != null ? (filter.equalsIgnoreCase("loggedout") ? "logged-out" : filter) : null; 
+        filter = filter != null ? (filter.equalsIgnoreCase("loggedout") ? "logged-out" : filter)
+                : null;
 
         // TODO: Sort by date created
         if (filter != null && validFilter(filter)) {
@@ -57,16 +59,54 @@ public class AgentController {
         return "home";
     }
 
+    @GetMapping("/index")
+    public String hello(Model model,
+            @RequestParam(name = "status", required = false) String filter) {
+
+        List<AgentEntity> agents;
+        filter = filter != null ? (filter.equalsIgnoreCase("loggedout") ? "logged-out" : filter)
+                : null;
+        int loggedOut = 0, after = 0, busy = 0, preview = 0, available = 0;
+
+
+        // TODO: Sort by date created
+        if (filter != null && validFilter(filter)) {
+            agents = entityService.filterEntities(filter);
+        } else {
+            agents = entityService.getEntities();
+        }
+
+        for (AgentEntity entity : agents) {
+            if (entity.getStatus().equalsIgnoreCase("available"))
+                available++;
+            if (entity.getStatus().equalsIgnoreCase("busy"))
+                busy++;
+            if (entity.getStatus().equalsIgnoreCase("after"))
+                after++;
+            if (entity.getStatus().equalsIgnoreCase("logged-out"))
+                loggedOut++;
+            if (entity.getStatus().equalsIgnoreCase("preview"))
+                preview++;
+        }
+
+        model.addAttribute("agents", agents);
+        model.addAttribute("available", available);
+        model.addAttribute("busy", busy);
+        model.addAttribute("preview", preview);
+        model.addAttribute("after", after);
+        model.addAttribute("loggedout", loggedOut);
+
+        logger.info("Page has agents " + agents.size() + " agents");
+        logger.info("Returning index page");
+        return "indexHome";
+    }
+
     private Boolean validFilter(String filter) {
-        if (filter.equalsIgnoreCase("available") ||
-            filter.equalsIgnoreCase("busy") || 
-            filter.equalsIgnoreCase("logged-out") ||
-            filter.equalsIgnoreCase("preview") || 
-            filter.equalsIgnoreCase("after") 
-        ) {
+        if (filter.equalsIgnoreCase("available") || filter.equalsIgnoreCase("busy")
+                || filter.equalsIgnoreCase("logged-out") || filter.equalsIgnoreCase("preview")
+                || filter.equalsIgnoreCase("after")) {
             return true;
-        } 
-        else {
+        } else {
             return false;
         }
     }

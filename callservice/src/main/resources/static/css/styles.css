@@ -129,7 +129,7 @@ body {
     margin-top: 15rem;
     padding: .2rem .5rem;
     z-index: 100;
-    transition: 0.4s
+    transition: 0.4s;
 }
 #menu-btn:focus {
     box-shadow: 0 0 0 0.25rem #7952b344; 
@@ -183,7 +183,7 @@ i.fa-circle {
 /* TOOLTIP */
 .tooltipType {
     position: relative;
-    display: inline-block
+    display: inline-block;
 }
 
 .tooltipType .tooltiptext {
