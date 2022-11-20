@@ -3,14 +3,15 @@ package com.callservice.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.callservice.entity.AgentEntity;
 import com.callservice.repository.EntityRepository;
 
@@ -19,109 +20,104 @@ import com.callservice.repository.EntityRepository;
 public class AgentService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
     // REPOSITORY using JPA
     @Autowired
     private EntityRepository database;
 
-
+    /**
+     * Method to retrieve all entities that are available.
+     * 
+     * @return
+     */
     public List<AgentEntity> getEntities() {
         return database.findAll();
     }
 
+    /**
+     * Method to filter entities based on some filter query
+     * 
+     * @param filter String value (available, busy, preview, loggedout, after)
+     * @return List
+     */
     public List<AgentEntity> filterEntities(String filter) {
         return database.findAllFilter(filter);
     }
 
-    // Method to save single entity
+    /**
+     * Method to save a single entity
+     * 
+     * @param entity AgentEntity
+     * @return String
+     */
     @Transactional
     public String saveEntity(AgentEntity entity) {
+        long start = System.currentTimeMillis();
         AgentEntity agent;
-
-        agent = database.findAgent(entity.getId());
         String retVal = "";
+        try {
+            agent = database.findAgent(entity.getId());
 
-        if (agent != null) {
-            agent = database.save(agent);
-            logger.info("Updated entity: " + agent.getId());
-            retVal = "Updated entity";
-        } else {
-            try {
-                // CompletableFuture<Integer> future = database.saveOrUpdate(new java.util.Date(), entity.getId(), entity.getName(), entity.getStatus(), new java.util.Date());
-                // CompletableFuture<Integer> future = database.saveOrUpdate(entity.getId(), entity.getName(), entity.getStatus());
+            if (agent != null) {
+                agent = database.save(agent);
+                // logger.info("Updated entity: " + agent.getId());
+                retVal = "Updated entity";
+
+            } else {
                 agent = database.save(entity);
-                // int tmp = future.get(1, TimeUnit.SECONDS);
-                // logger.info("Values updated: {}", tmp);
-
-                logger.info("Created entity: " + agent);
+                // logger.info("Created entity: " + agent);
                 retVal = "Created entity";
-
-            } catch (Exception e) {
-                // TODO: handle exception
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            retVal = "Error"; // FIXME:
         }
+        // check if agent exists
+        long end = System.currentTimeMillis();
+        logger.info("Transaction time: {}ms", (end - start));
         return retVal;
     }
 
-    // Async method to save single entity
-    @Async
+    /**
+     * Method to delete a single entity
+     * 
+     * @param entity AgentEntity
+     * @return String
+     */
     @Transactional
-    public CompletableFuture<AgentEntity> entityUpdate(AgentEntity entity) {
+    public String deleteEntity(AgentEntity entity) {
         long start = System.currentTimeMillis();
         AgentEntity agent;
-        logger.info("Incoming Entity is: {}", entity.toString());
+        String response = "Not found";
         try {
-            CompletableFuture<AgentEntity> future = database.findAgentAsync(entity.getId());
-            agent = future.get(3, TimeUnit.SECONDS);
-            // agent = database.findAgent(entity.getId());
-            logger.info("Entity found: " + entity.getId());
-
-        } catch (Exception e) {
-            // FIXME: handle exception
-            System.err.println(e.toString());
-            logger.error(e.toString());
-            logger.error("Uncaught exception finding entity;;; SORRY READING UP SOME DOCUMENTATION CURRENTLY");
-            return null;
-        }
-
-        // TEST CASE
-        // update the entities info
-        if (agent != null) {
-            agent = database.save(agent);
-            logger.info("Updated entity: " + agent.getId());
-        } else {
-            try {
-                // CompletableFuture<Integer> future = database.saveOrUpdate(new java.util.Date(), entity.getId(), entity.getName(), entity.getStatus(), new java.util.Date());
-                // CompletableFuture<Integer> future = database.saveOrUpdate(entity.getId(), entity.getName(), entity.getStatus());
-                // int tmp = future.get(1, TimeUnit.SECONDS);
-                // logger.info("Values updated: {}", tmp);
-                agent = database.save(entity);
-                logger.info("Created entity: " + agent);
-
-            } catch (Exception e) {
-                // TODO: handle exception
-                e.printStackTrace();
+            agent = database.findAgent(entity.getId());
+            if (agent != null) {
+                database.delete(agent);
+                response = "Deleted entity";
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = "Error";
         }
 
-        database.flush();
         long end = System.currentTimeMillis();
         logger.info("Transaction time: {}ms", (end - start));
-
-        // return future obj
-        return CompletableFuture.completedFuture(agent);
-
+        return response;
     }
 
+    /**
+     * Method to save an array of entities; attempt at handling database concurrency issues
+     * 
+     * @param entities
+     * @return Future object containing a List collection with AgentEntity objects.
+     */
     @Async
     @Transactional
-    public CompletableFuture<List<AgentEntity>> saveUsers(List<AgentEntity> entities) {
+    public CompletableFuture<List<AgentEntity>> saveEntities(List<AgentEntity> entities) {
         AgentEntity agent;
         List<AgentEntity> result = new ArrayList<>();
         long start = System.currentTimeMillis();
         // iterate through each assuring not in db
-        for (int i=0; i<entities.size(); i++) {
+        for (int i = 0; i < entities.size(); i++) {
             try {
                 agent = database.findAgent(entities.get(i).getId());
 

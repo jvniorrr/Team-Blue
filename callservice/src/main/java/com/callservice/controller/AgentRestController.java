@@ -1,20 +1,17 @@
 package com.callservice.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.TimeUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
 import com.callservice.entity.Agent;
 import com.callservice.entity.AgentEntity;
 import com.callservice.service.AgentService;
@@ -29,12 +27,11 @@ import com.callservice.service.RuntimeProcess;
 
 
 /**
- * Rest API Controller 
- * - For sending updates for new agents. 
+ * Rest API Controller - For sending updates for new agents.
  */
 @RestController
+@RequestMapping("/api/v1")
 public class AgentRestController {
-
     Logger logger = LoggerFactory.getLogger(AgentRestController.class);
 
     @Autowired
@@ -42,8 +39,6 @@ public class AgentRestController {
 
     @Autowired
     private AgentService agentService;
-
-    private List<AgentEntity> allEntities = new ArrayList<>();
 
     // set up emitter to transmit calls
     private List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
@@ -69,84 +64,34 @@ public class AgentRestController {
     }
 
 
-
-
-
-
-    // JUNIOR CRUD
-    /**
-     * Method to update an agent given a UUID (String), Status (String), and Name (String)
-     * @param employee
-     * @return information regarding what process occured.
-     */
-    @RequestMapping(value = "/gatej", method = RequestMethod.GET)
-    public Map<String, String> updateAgent(@RequestBody AgentEntity employee) {
-
-        logger.info("Incoming API Request -> Update entity");
-
-        Map<String, String> ret = new HashMap<>();
-        // String update = agentService.entityRequest(employee);
-        // System.out.println(update);
-        String update = agentService.saveEntity(employee);
-
-        ret.put("message", update);
-        ret.put("status", "200");
-        ret.put("success", (update.equalsIgnoreCase("updated entity") || update.equalsIgnoreCase("created entity") ? "true" : "false"));
-        // return service.updateAgent(employee);
-        return ret;
-    }
-    
-    /**
-     * Method to delete an agent given a UUID (String), Status (String), and Name (String)
-     * @param employee
-     * @return information regarding what process occured.
-     */
-    @RequestMapping(value = "/gatej", method = RequestMethod.DELETE)
-    public Map<String, String> deleteAgent(@RequestBody Agent employee) {
-        // System.out.println(employee);
-        Map<String, String> ret = new HashMap<>();
-        String update = service.deleteAgent(employee);
-
-        ret.put("message", update);
-        ret.put("status", "200");
-        ret.put("success", (update.equalsIgnoreCase("employee record deleted") ? "true" : "false"));
-        return ret;
-        // return service.deleteAgent(employee);
-    }
     // JUNIOR CRUD
 
     /**
      * Method to filter out employees based off of a specific filter string. API CALL
+     * 
      * @param filter
      * @return
      */
     @RequestMapping(value = "/filter", method = RequestMethod.GET)
-    public List<Agent> filterAgents(@RequestParam(name = "status", required = false) String filter) {
-        logger.info("Incoming API Request -> View all by filter");
+    public ResponseEntity<Map<String, Object>> filterAgents(
+            @RequestParam(name = "status", required = false) String filter) {
+        logger.debug("API Invoked: filterAgents()");
+        List<AgentEntity> entities;
+        Map<String, Object> ret = new HashMap<>();
         if (filter != null && validFilter(filter) == true) {
-            return service.filterAll(filter);
+            entities = agentService.filterEntities(filter);
         } else {
-            return service.readEmployees();
+            entities = agentService.getEntities();
         }
-    }
+        ret.put("agents", entities);
+        ret.put("response", String.valueOf(HttpStatus.OK.value()));
 
-    /** Method to verify user inputted a valid filter param */
-    private Boolean validFilter(String filter) {
-        if (filter.equalsIgnoreCase("available") ||
-            filter.equalsIgnoreCase("busy") || 
-            filter.equalsIgnoreCase("logged-out") || 
-            filter.equalsIgnoreCase("preview") || 
-            filter.equalsIgnoreCase("after") 
-        ) {
-            return true;
-        } 
-        else {
-            return false;
-        }
+        return new ResponseEntity<>(ret, HttpStatus.OK);
     }
 
     /**
      * Server Event Initializer, creates new Emitters when a new request is sent on our frontend.
+     * 
      * @return
      */
     @RequestMapping("/agents")
@@ -166,65 +111,59 @@ public class AgentRestController {
         emitters.add(sseEmitter);
 
         // logger.info("New Emitter created");
-        
+
         return sseEmitter;
     }
 
     /**
      * REST API call for client to send in entities and their status'
+     * 
      * @param employee
      * @return
      */
     @PostMapping(value = "/update")
-    public Map<String, String> sseUpdateAgent(@RequestBody com.callservice.entity.AgentEntity employee) {
-
-        // logger.info("New Emitter created");
+    public ResponseEntity<Map<String, String>> saveOrUpdateEntity(
+            @RequestBody AgentEntity employee) {
+        logger.debug("API Invoked: saveOrUpdateEntity()");
         Map<String, String> ret = new HashMap<>();
+        ResponseEntity<Map<String, String>> response;
 
         // parse the incoming body request assure proper fields
         for (SseEmitter emitter : emitters) {
             try {
-                // can return a msg upon successfull call
+                // send an event for each emmitter that is open
                 emitter.send(SseEmitter.event().name("updateAgent").data(employee));
-                // set return attibutes / keys
-                ret.put("message", "Successfully processed");
-                ret.put("response", "200");
-                ret.put("success", "true");
-                
             } catch (IOException e) {
-
-                // set return attibutes / keys
-                ret.put("message", "IO Exception");
-                ret.put("response", "500");
-                ret.put("success", "false");
                 emitters.remove(emitter); // handler for io exception
-                
             } catch (Exception e) {
-                // set return attibutes / keys
-                ret.put("message", "Server Error");
-                ret.put("response", "500");
-                ret.put("success", "false");
                 // handle exception
                 e.printStackTrace();
-
             }
         }
 
-        allEntities.add(employee);
-        if (allEntities.size() >= 100) {
-            try {
-                CompletableFuture<List<AgentEntity>> future = agentService.saveUsers(allEntities);
-                List<AgentEntity> entities = future.get(2, TimeUnit.SECONDS);
-                // logger.info("Successfully saved all users: {}", entities);
-                logger.info("Successfully saved all users");
-                allEntities.clear();
-            } catch (Exception e) {
-                // TODO: handle exception
-                e.printStackTrace();
-            }
+        try {
+            String tmp = agentService.saveEntity(employee);
+            ret.put("message", tmp);
+            ret.put("response", String.valueOf(HttpStatus.OK.value()));
+            response = new ResponseEntity<>(ret, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ret.put("message", e.getMessage());
+            ret.put("response", String.valueOf(HttpStatus.BAD_REQUEST.value()));
+            response = new ResponseEntity<>(ret, HttpStatus.BAD_REQUEST);
         }
 
-        return ret;
+        return response;
+
+    }
+
+
+
+    /** Method to verify user inputted a valid filter param */
+    private Boolean validFilter(String filter) {
+        return (filter.equalsIgnoreCase("available") || filter.equalsIgnoreCase("busy")
+                || filter.equalsIgnoreCase("logged-out") || filter.equalsIgnoreCase("preview")
+                || filter.equalsIgnoreCase("after"));
     }
 
 }
