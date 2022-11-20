@@ -28,13 +28,7 @@ $(document).ready(() => {
         // check if the user is present
         let agent = $(`i[data-user-id='${agentData.id}']`);
         if (agent.length) {
-            present = true;
-            updateAgent(agent, agentData);
-        }
-
-        // check again using string val
-        agent = $(`i[data-user-id='${agentData.idString}']`);
-        if (agent.length) {
+            let child = $(agent.children()[0]);
             present = true;
             updateAgent(agent, agentData);
         }
@@ -51,7 +45,7 @@ $(document).ready(() => {
      * @param {jQuery Obj} element jQuery node element.
      * @param {JSON} agentData Object containing information pertaining to the user we are updating
      */
-    function updateAgent(element, agentData) {
+    function updateAgent(element, agentData, childElement) {
         // element.css('color', newColor);
         // check if the element has any present colors if so remove then update
         if (element.hasClass("available")) {
@@ -73,6 +67,9 @@ $(document).ready(() => {
         // update the new color
         element.toggleClass(agentData.status); // TODO: add error handling incase they pass an invalid name
         element.attr("data-user-status", agentData.status);
+        // element.attr("data-user-status", agentData.status);
+        childElement.html(`${agentData.name}<br>${agentData.status}`)
+        
     }
 
     function createElement(agentData) {
