@@ -65,6 +65,21 @@ public class AgentRestController {
 
 
     // JUNIOR CRUD
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<Map<String, String>> deleteEntity(AgentEntity entity) {
+        logger.debug("API Invoked: deleteEntity()");
+        Map<String, String> ret = new HashMap<>();
+
+        String deleteResponse = agentService.deleteEntity(entity);
+        ret.put("message", deleteResponse);
+        if (deleteResponse.equalsIgnoreCase("deleted entity")) {
+            return new ResponseEntity<>(ret, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(ret, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+    }
 
     /**
      * Method to filter out employees based off of a specific filter string. API CALL
@@ -72,7 +87,7 @@ public class AgentRestController {
      * @param filter
      * @return
      */
-    @RequestMapping(value = "/filter", method = RequestMethod.GET)
+    @RequestMapping(value = "/entities", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> filterAgents(
             @RequestParam(name = "status", required = false) String filter) {
         logger.debug("API Invoked: filterAgents()");
@@ -88,6 +103,48 @@ public class AgentRestController {
 
         return new ResponseEntity<>(ret, HttpStatus.OK);
     }
+
+    /**
+     * REST API call for client to send in entities and their status'
+     * 
+     * @param entity
+     * @return
+     */
+    @PostMapping(value = "/update")
+    public ResponseEntity<Map<String, String>> saveOrUpdateEntity(@RequestBody AgentEntity entity) {
+        logger.debug("API Invoked: saveOrUpdateEntity()");
+        Map<String, String> ret = new HashMap<>();
+        ResponseEntity<Map<String, String>> response;
+
+        // parse the incoming body request assure proper fields
+        for (SseEmitter emitter : emitters) {
+            try {
+                // send an event for each emmitter that is open
+                emitter.send(SseEmitter.event().name("updateAgent").data(entity));
+            } catch (IOException e) {
+                emitters.remove(emitter); // handler for io exception
+            } catch (Exception e) {
+                // handle exception
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            String tmp = agentService.saveEntity(entity);
+            ret.put("message", tmp);
+            ret.put("response", String.valueOf(HttpStatus.OK.value()));
+            response = new ResponseEntity<>(ret, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ret.put("message", e.getMessage());
+            ret.put("response", String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
+            response = new ResponseEntity<>(ret, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return response;
+
+    }
+
 
     /**
      * Server Event Initializer, creates new Emitters when a new request is sent on our frontend.
@@ -110,54 +167,8 @@ public class AgentRestController {
         sseEmitter.onTimeout(() -> emitters.remove(sseEmitter));
         emitters.add(sseEmitter);
 
-        // logger.info("New Emitter created");
-
         return sseEmitter;
     }
-
-    /**
-     * REST API call for client to send in entities and their status'
-     * 
-     * @param employee
-     * @return
-     */
-    @PostMapping(value = "/update")
-    public ResponseEntity<Map<String, String>> saveOrUpdateEntity(
-            @RequestBody AgentEntity employee) {
-        logger.debug("API Invoked: saveOrUpdateEntity()");
-        Map<String, String> ret = new HashMap<>();
-        ResponseEntity<Map<String, String>> response;
-
-        // parse the incoming body request assure proper fields
-        for (SseEmitter emitter : emitters) {
-            try {
-                // send an event for each emmitter that is open
-                emitter.send(SseEmitter.event().name("updateAgent").data(employee));
-            } catch (IOException e) {
-                emitters.remove(emitter); // handler for io exception
-            } catch (Exception e) {
-                // handle exception
-                e.printStackTrace();
-            }
-        }
-
-        try {
-            String tmp = agentService.saveEntity(employee);
-            ret.put("message", tmp);
-            ret.put("response", String.valueOf(HttpStatus.OK.value()));
-            response = new ResponseEntity<>(ret, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            ret.put("message", e.getMessage());
-            ret.put("response", String.valueOf(HttpStatus.BAD_REQUEST.value()));
-            response = new ResponseEntity<>(ret, HttpStatus.BAD_REQUEST);
-        }
-
-        return response;
-
-    }
-
-
 
     /** Method to verify user inputted a valid filter param */
     private Boolean validFilter(String filter) {
