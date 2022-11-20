@@ -44,7 +44,6 @@ public class AgentController {
         filter = filter != null ? (filter.equalsIgnoreCase("loggedout") ? "logged-out" : filter)
                 : null;
 
-        // TODO: Sort by date created
         if (filter != null && validFilter(filter)) {
             agents = entityService.filterEntities(filter);
         } else {
@@ -68,7 +67,6 @@ public class AgentController {
         int loggedOut = 0, after = 0, busy = 0, preview = 0, available = 0;
 
 
-        // TODO: Sort by date created
         if (filter != null && validFilter(filter)) {
             agents = entityService.filterEntities(filter);
         } else {
