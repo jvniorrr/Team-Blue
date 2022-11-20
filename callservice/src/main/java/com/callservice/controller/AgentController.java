@@ -17,8 +17,7 @@ import com.callservice.service.RuntimeProcess;
 
 
 /**
- * Controller to handle rendering web pages using Thymeleaf; essentially though pure html css and
- * js.
+ * Controller to handle rendering web pages using Thymeleaf; essentially though pure html css and js.
  */
 @Controller
 public class AgentController {

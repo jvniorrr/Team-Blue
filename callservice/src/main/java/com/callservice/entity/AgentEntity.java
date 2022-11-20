@@ -102,4 +102,5 @@ public class AgentEntity {
         return "{\"storeId\": " + this.storeId + ", \"name\": \"" + this.name + "\", \"id\": "
                 + this.id + ", \"status\": \"" + this.status + "\"}";
     }
+
 }
