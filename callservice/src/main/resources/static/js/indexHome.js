@@ -1,6 +1,6 @@
 // Hanlder for events being emitted
 $(document).ready(() => {
-    var source = new EventSource("/agents");
+    var source = new EventSource("/api/v1/agents");
     var gridElement = $("#dots-grid");
 
     let entityStats = $(".entityStats")
