@@ -84,6 +84,7 @@ For building and running the application you need:
 
 -   [JDK 1.8][java8]
 -   [Maven 4][maven]
+-   [mySQL][sql-dl]
 
 ### Installation
 
@@ -100,18 +101,9 @@ For building and running the application you need:
 
 ## Usage
 
-### REST API
+### Documentation
 
-`POST /update/`
-
-> Route to update a new user or create a new user accordingly <br> ```curl --location --request POST 'localhost:3000/update' \
---header 'Accept: application/json' \
---header 'Content-type: application/json' \
---data-raw '{
-    "name": "first last",
-    "id":"9cbf9316-bf54-4bba-8e85-7917f0895edd",
-    "status": "available"
-    }'```
+https://app.swaggerhub.com/apis-docs/J_2/Call-Service-Team-Blue/1.0.0
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -188,6 +180,7 @@ Please make sure to update tests as appropriate.
 [java-url]: https://www.java.com/en/
 [sql.com]: https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white
 [sql-url]: https://www.mysql.com/
+[sql-dl]: https://dev.mysql.com/downloads/mysql/
 [java8]: https://www.oracle.com/java/technologies/downloads/#java8
 [maven]: http://maven.apache.org/POM/4.0.0
 [best-readme-template]: https://github.com/othneildrew/Best-README-Template
