@@ -84,6 +84,7 @@ For building and running the application you need:
 
 -   [JDK 1.8][java8]
 -   [Maven 4][maven]
+-   [mySQL][sql-dl]
 
 ### Installation
 
@@ -179,6 +180,7 @@ Please make sure to update tests as appropriate.
 [java-url]: https://www.java.com/en/
 [sql.com]: https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white
 [sql-url]: https://www.mysql.com/
+[sql-dl]: https://dev.mysql.com/downloads/mysql/
 [java8]: https://www.oracle.com/java/technologies/downloads/#java8
 [maven]: http://maven.apache.org/POM/4.0.0
 [best-readme-template]: https://github.com/othneildrew/Best-README-Template
