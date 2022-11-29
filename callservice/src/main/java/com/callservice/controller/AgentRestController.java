@@ -20,10 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import com.callservice.entity.Agent;
 import com.callservice.entity.AgentEntity;
 import com.callservice.service.AgentService;
-import com.callservice.service.RuntimeProcess;
 
 
 /**
@@ -35,37 +33,14 @@ public class AgentRestController {
     Logger logger = LoggerFactory.getLogger(AgentRestController.class);
 
     @Autowired
-    private RuntimeProcess service;
-
-    @Autowired
     private AgentService agentService;
 
     // set up emitter to transmit calls
     private List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
 
-    @RequestMapping(value = "/gate", method = RequestMethod.POST)
-    public String createEmployee(@RequestBody Agent employee) {
-        return service.createEmployee(employee);
-    }
-
-    @RequestMapping(value = "/gate", method = RequestMethod.GET)
-    public List<Agent> readEmployees() {
-        return service.readEmployees();
-    }
-
-    @RequestMapping(value = "/gate", method = RequestMethod.PUT)
-    public String updateEmployee(@RequestBody Agent employee) {
-        return service.updateEmployee(employee);
-    }
-
-    @RequestMapping(value = "/gate", method = RequestMethod.DELETE)
-    public String deleteEmployee(@RequestBody Agent employee) {
-        return service.deleteEmployee(employee);
-    }
-
 
     // JUNIOR CRUD
-    @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/agent", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String, String>> deleteEntity(AgentEntity entity) {
         logger.debug("API Invoked: deleteEntity()");
         Map<String, String> ret = new HashMap<>();
@@ -87,7 +62,7 @@ public class AgentRestController {
      * @param filter
      * @return
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/agent", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> filterAgents(
             @RequestParam(name = "status", required = false) String filter) {
         logger.debug("API Invoked: filterAgents()");
@@ -110,7 +85,7 @@ public class AgentRestController {
      * @param entity
      * @return
      */
-    @PostMapping(value = "/")
+    @RequestMapping(value = "/agent", method = RequestMethod.POST)
     public ResponseEntity<Map<String, String>> saveOrUpdateEntity(@RequestBody AgentEntity entity) {
         logger.debug("API Invoked: saveOrUpdateEntity()");
         Map<String, String> ret = new HashMap<>();
@@ -151,7 +126,7 @@ public class AgentRestController {
      * 
      * @return
      */
-    @RequestMapping("/agents")
+    @RequestMapping("/init")
     public SseEmitter agents() {
         SseEmitter sseEmitter = new SseEmitter((long) (60000 * 1)); // add a 1 minute timeout
         // SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
@@ -177,4 +152,4 @@ public class AgentRestController {
                 || filter.equalsIgnoreCase("after"));
     }
 
-}
+} 
