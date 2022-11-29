@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/css/landing.css">
+    <script src="/js/landing.js" defer></script>
+
+    <title>Call Service App</title>
+</head>
+<body>
+    <div id="login-central">
+        <div id = "input-wrap">
+            <input id = "userkey" type="password">
+        </div>
+
+        <span id = "response-bar" th:text = "${response.message}"></span>
+
+        <div id = "btn-container">
+            <button id = "loginbtn">Login</button>
+            <div id = "btn-wrapper">
+                <a id = "abt-link" href = "https://github.com/ericjiang255/Team-Blue" target = "_blank">About<a class="material-icons">chevron_right</a></a>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

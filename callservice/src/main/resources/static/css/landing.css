@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+
+html
+{
+    font-size: 100%;
+    width: 100%;
+    height: 100%;
+}
+
+*
+{
+    font-family: 'JetBrains Mono', monospace;
+}
+
+body
+{
+    background: linear-gradient(60deg, #292929, #4B4B4B);
+    display: flex;
+}
+
+button:hover
+{
+    cursor: pointer;
+}
+
+#login-central
+{
+    position: absolute;
+    top: 20%;
+    left: 34%;
+    border: solid 0.05rem black;
+    background-color: #292929;
+    width: 30rem;
+    height: 8rem;
+}
+
+#login-central input
+{
+    display: block;
+    margin: 1rem;
+    margin-top: 1rem;
+    position: relative;
+    width: 70%;
+    left: 22%;
+    border-radius: 0.5rem;
+    border-style: none;
+    outline: none;
+}
+
+#input-wrap::before
+{
+    content: "Admin Key:";
+    color: white;
+    width: 20%;
+    height: 2rem;
+    position: relative;
+    top: 2.1rem;
+    margin: 1rem;
+}
+
+#response-bar
+{
+    color: red;
+    z-index: 9;
+    position: absolute;
+    left: 3.5%;
+    top: 57%;
+}
+
+#btn-wrapper
+{
+    width: 45%;
+    position: relative;
+    left: 29%;
+}
+
+#btn-container
+{
+    display: flex;
+    width: 56%;
+    justify-content: space-around;
+    margin-top: 1rem;
+    position: relative;
+    left: 23%;
+}
+
+#btn-container button
+{
+    background: rgb(36, 49, 235);
+    color: white;
+    border: solid 0.05rem rgba(0,0,0,0);
+    border-radius: 2rem;
+    width: 45%;
+    position: relative;
+    left: 19%;
+}
+
+#btn-container button:hover
+{
+    box-shadow: 0px 0px 0.25rem rgb(36, 49, 235);
+}
+
+#btn-container a
+{
+    color: white;   
+}
+
+.material-icons
+{
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+#abt-link:hover
+{
+    cursor: pointer;
+}

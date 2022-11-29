@@ -65,7 +65,7 @@ public class AgentRestController {
 
 
     // JUNIOR CRUD
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/", method = RequestMethod.DELETE)
     public ResponseEntity<Map<String, String>> deleteEntity(AgentEntity entity) {
         logger.debug("API Invoked: deleteEntity()");
         Map<String, String> ret = new HashMap<>();
@@ -87,7 +87,7 @@ public class AgentRestController {
      * @param filter
      * @return
      */
-    @RequestMapping(value = "/entities", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> filterAgents(
             @RequestParam(name = "status", required = false) String filter) {
         logger.debug("API Invoked: filterAgents()");
@@ -110,7 +110,7 @@ public class AgentRestController {
      * @param entity
      * @return
      */
-    @PostMapping(value = "/update")
+    @PostMapping(value = "/")
     public ResponseEntity<Map<String, String>> saveOrUpdateEntity(@RequestBody AgentEntity entity) {
         logger.debug("API Invoked: saveOrUpdateEntity()");
         Map<String, String> ret = new HashMap<>();
