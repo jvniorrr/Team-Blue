@@ -41,7 +41,7 @@ public class AgentController {
 
     //only allow get method in case of address bar url invocation and post method so front can securely send data
     //any other methods should not be allowed to this route so server will automatically return error page in such case
-    @RequestMapping(value = "/home", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = {"/", "/home"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String hello(Model model,
             @RequestParam(name = "status", required = false) String filter,
             @RequestParam(name = "key", required = false) Optional<String> auth) 
@@ -100,7 +100,7 @@ public class AgentController {
 
         logger.info("Page has agents " + agents.size() + " agents");
         logger.info("Returning index page");
-        return "indexHome";
+        return "index";
     }
 
     private Boolean validFilter(String filter) {

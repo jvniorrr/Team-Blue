@@ -12,7 +12,7 @@ function handleSubmit(event)
     var form = document.createElement('form');
     document.body.appendChild(form);
     form.method = 'post';
-    form.action = "http://localhost:8080/home";    //modify on switch between testing and deployment
+    form.action = window.location.origin;    //modify on switch between testing and deployment
     
     var input = document.createElement('input');
     input.type = 'hidden';

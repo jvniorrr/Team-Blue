@@ -1,19 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap");
 
 :root {
     --primary-dark: #292929;
-    --secondary-dark: #2E2E2E;
+    --secondary-dark: #2e2e2e;
     --primary-dark-text: #828282;
-    --agent-dark-unfilled: #4B4B4B;; /* TODO: update color */
+    --agent-dark-unfilled: #4b4b4b; /* TODO: update color */
     --secondary-color: #bb86fc;
-
 
     /* agent colors */
     --agent-available-color: #008276;
-    --agent-busy-color: #D23645;
-    --agent-after-color: #FFD73F;
-    --agent-loggedout-color: #5E5E5E;
-    --agent-preview-color: #1A75C0;
+    --agent-busy-color: #d23645;
+    --agent-after-color: #ffd73f;
+    --agent-loggedout-color: #5e5e5e;
+    --agent-preview-color: #1a75c0;
 }
 
 * {
@@ -28,7 +27,6 @@ body {
     min-height: 100vh;
 }
 
-
 /* Navigation Bar */
 .navbar {
     background: var(--secondary-dark);
@@ -36,7 +34,7 @@ body {
 
 .nav-title {
     color: var(--primary-dark-text);
-    font-family: "Nunito Sans", sans-serif;;
+    font-family: "Nunito Sans", sans-serif;
     font-style: normal;
     font-weight: 400;
 }
@@ -61,9 +59,8 @@ body {
     padding: 0rem 1.5rem !important;
 }
 .state-color-dot {
-    filter: drop-shadow(0rem 0rem .3rem #A3A3A3);
-    margin: 1rem .25rem !important;
-
+    filter: drop-shadow(0rem 0rem 0.3rem #a3a3a3);
+    margin: 1rem 0.25rem !important;
 }
 
 .nav-item {
@@ -71,29 +68,29 @@ body {
 }
 .nav-link {
     font-size: 1.2rem;
-    padding: 0rem  1rem !important;
-    background: #B0B0B0;
-    border-radius: .625rem;
+    padding: 0rem 1rem !important;
+    background: #b0b0b0;
+    border-radius: 0.625rem;
     padding-left: 0;
 }
 .nav-link.available {
-    box-shadow: .15rem .15rem .32rem var(--agent-available-color);
+    box-shadow: 0.15rem 0.15rem 0.32rem var(--agent-available-color);
 }
 .nav-link.busy {
-    box-shadow: .15rem .15rem .32rem var(--agent-busy-color);
+    box-shadow: 0.15rem 0.15rem 0.32rem var(--agent-busy-color);
 }
 .nav-link.loggedout {
-    box-shadow: .15rem .15rem .32rem var(--agent-loggedout-color);
+    box-shadow: 0.15rem 0.15rem 0.32rem var(--agent-loggedout-color);
 }
 .nav-link.after {
-    box-shadow: .15rem .15rem .32rem var(--agent-after-color);
+    box-shadow: 0.15rem 0.15rem 0.32rem var(--agent-after-color);
 }
 .nav-link.preview {
-    box-shadow: .15rem .15rem .32rem var(--agent-preview-color);
+    box-shadow: 0.15rem 0.15rem 0.32rem var(--agent-preview-color);
 }
 #state-color-text {
-    color: #FFFFFF;
-    text-shadow: 0rem .25rem .25rem var(--secondary-color);
+    color: #ffffff;
+    text-shadow: 0rem 0.25rem 0.25rem var(--secondary-color);
 }
 
 /* .nav-link:active,
@@ -108,7 +105,7 @@ body {
 }
 
 .container-fluid {
-    max-height: 100vh
+    max-height: 100vh;
 }
 
 /* for navbar / sidebar */
@@ -118,41 +115,39 @@ body {
 /* for section content */
 .active-cont {
     margin-left: 15.625rem;
-    transition: 0.4s
+    transition: 0.4s;
 }
 
 /* btn for sidebar */
 #menu-btn {
     background-color: inherit;
     color: #7952b3;
-    position:fixed;
+    position: fixed;
     margin-top: 15rem;
-    padding: .2rem .5rem;
+    padding: 0.2rem 0.5rem;
     z-index: 100;
     transition: 0.4s;
 }
 #menu-btn:focus {
-    box-shadow: 0 0 0 0.25rem #7952b344; 
+    box-shadow: 0 0 0 0.25rem #7952b344;
 }
 
 .fa-solid {
-    transition: 0.4s
+    transition: 0.4s;
 }
 /* Agent Dots Colors  */
 .agent-dot {
     /* filter: drop-shadow(0rem 0rem .3rem #A3A3A3); */
-    margin: 0rem .05rem !important;
+    margin: 0rem 0.05rem !important;
     transition: 0.5s;
     font-size: 0.6rem;
     /* border-radius: 50%; */
 }
 /* TODO: Fix below hover effects */
-i .agent-dot:hover, {
-    background: #FFF !important;
-    box-shadow: 0 0 0 .25rem #333,
-                0 0 0 .375rem #A3A3A3 !important;
+i .agent-dot:hover {
+    background: #fff !important;
+    box-shadow: 0 0 0 0.25rem #333, 0 0 0 0.375rem #a3a3a3 !important;
 }
-
 
 i.fa-circle {
     color: var(--secondary-dark);
@@ -163,22 +158,23 @@ i.fa-circle {
 .busy {
     color: var(--agent-busy-color) !important;
 }
-.logged-out, .loggedout {
+.logged-out,
+.loggedout {
     color: var(--agent-loggedout-color) !important;
 }
 .preview {
     color: var(--agent-preview-color) !important;
 }
-.after, .after-work {
+.after,
+.after-work {
     color: var(--agent-after-color) !important;
 }
 
 #dots-grid {
     max-height: 100vh;
     /* overflow: hidden; */
-    font-size: .56rem
+    font-size: 0.56rem;
 }
-
 
 /* TOOLTIP */
 .tooltipType {
@@ -202,10 +198,6 @@ i.fa-circle {
 .tooltipType:hover .tooltiptext {
     visibility: visible;
 }
-
-
-
-
 
 /* ETC */
 .neumorphism-badge {

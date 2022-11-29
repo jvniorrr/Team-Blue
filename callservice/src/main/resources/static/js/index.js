@@ -1,7 +1,14 @@
 // Hanlder for events being emitted
 $(document).ready(() => {
-    var source = new EventSource("api/v1/agents");
+    var source = new EventSource("/api/v1/init");
     var gridElement = $("#dots-grid");
+
+    let entityStats = $(".entityStats");
+    let availableStats = $(".availableStats");
+    let busyStats = $(".busyStats");
+    let previewStats = $(".previewStats");
+    let loggedOutStats = $(".loggedOutStats");
+    let afterStats = $(".afterStats");
 
     const CSS_Options = {
         available: "green", // available
@@ -22,6 +29,22 @@ $(document).ready(() => {
         // parse through the event
         let agentData = JSON.parse(event.data);
 
+        entityStats.html(parseInt(entityStats.html()) + 1);
+        if (agentData.status == "available") {
+            availableStats.html(parseInt(availableStats.html()) + 1);
+        } else if (agentData.status == "busy") {
+            busyStats.html(parseInt(busyStats.html()) + 1);
+        } else if (agentData.status == "preview") {
+            previewStats.html(parseInt(previewStats.html()) + 1);
+        } else if (
+            agentData.status == "logged-out" ||
+            agentData.status == "loggedout"
+        ) {
+            loggedOutStats.html(parseInt(loggedOutStats.html()) + 1);
+        } else if (agentData.status == "after") {
+            afterStats.html(parseInt(afterStats.html()) + 1);
+        }
+
         // check in all the displayed i elements if the agent is already present
         let present = false;
 
@@ -30,7 +53,7 @@ $(document).ready(() => {
         if (agent.length) {
             let child = $(agent.children()[0]);
             present = true;
-            updateAgent(agent, agentData);
+            updateAgent(agent, agentData, child);
         }
 
         // create element per agent if not already present
@@ -44,6 +67,7 @@ $(document).ready(() => {
      * Method to update a user's attributes and class values when agent already present.
      * @param {jQuery Obj} element jQuery node element.
      * @param {JSON} agentData Object containing information pertaining to the user we are updating
+     * @param {jQuery Obj} childElemtn jQuery node element.
      */
     function updateAgent(element, agentData, childElement) {
         // element.css('color', newColor);
@@ -67,9 +91,8 @@ $(document).ready(() => {
         // update the new color
         element.toggleClass(agentData.status); // TODO: add error handling incase they pass an invalid name
         element.attr("data-user-status", agentData.status);
-        // element.attr("data-user-status", agentData.status);
-        childElement.html(`${agentData.name}<br>${agentData.status}`)
-        
+
+        childElement.html(`${agentData.name}<br>${agentData.status}`);
     }
 
     function createElement(agentData) {
@@ -78,7 +101,7 @@ $(document).ready(() => {
         // <span th:attr="class='tooltiptext'" th:utext="${agent.name +  ' <br>' +  agent.status}"></span>
         const spanElement = document.createElement("span");
         spanElement.classList.add("tooltiptext");
-        spanElement.innerHTML  = `${agentData.name} <br> ${agentData.status}`;
+        spanElement.innerHTML = `${agentData.name} <br> ${agentData.status}`;
 
         element.addClass("fa-solid fa-circle agent-dot tooltipType");
         element.addClass(agentData.status);
