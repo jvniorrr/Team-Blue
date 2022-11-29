@@ -40,11 +40,11 @@ public class AgentRestController {
 
     // JUNIOR CRUD
     @RequestMapping(value = "/agent", method = RequestMethod.DELETE)
-    public ResponseEntity<Map<String, String>> deleteEntity(AgentEntity entity) {
+    public ResponseEntity<Map<String, String>> deleteEntity(@RequestParam(name = "id", required = true) String entityID) {
         logger.debug("API Invoked: deleteEntity()");
         Map<String, String> ret = new HashMap<>();
-
-        String deleteResponse = agentService.deleteEntity(entity);
+        
+        String deleteResponse = agentService.deleteEntity(entityID);
         ret.put("message", deleteResponse);
         if (deleteResponse.equalsIgnoreCase("deleted entity")) {
             return new ResponseEntity<>(ret, HttpStatus.OK);

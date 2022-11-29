@@ -85,12 +85,13 @@ public class AgentService {
      * @return String
      */
     @Transactional
-    public String deleteEntity(AgentEntity entity) {
+    public String deleteEntity(String entity) {
         long start = System.currentTimeMillis();
         AgentEntity agent;
         String response = "Not found";
         try {
-            agent = database.findAgent(entity.getId());
+            // agent = database.findAgent(entity.getId());
+            agent = database.findAgent(entity);
             if (agent != null) {
                 database.delete(agent);
                 response = "Deleted entity";
