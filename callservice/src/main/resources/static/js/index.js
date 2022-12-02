@@ -10,40 +10,14 @@ $(document).ready(() => {
     let loggedOutStats = $(".loggedOutStats");
     let afterStats = $(".afterStats");
 
-    const CSS_Options = {
-        available: "green", // available
-        busy: "red", // on voice call
-        "logged-out": "black", // logged out
-        after: "yellow", // after call work
-        preview: "blue", // on preview task
-    };
-
     source.addEventListener("updateAgent", EventHandler);
     /**
      * Method to handle the event listener. Awaits events and parses data to be pushed onto frontend.
      * @param {Object} event Event from emitter that handles the incoming events
      */
     function EventHandler(event) {
-        // can accept a collection / list and iterate through each
-
         // parse through the event
         let agentData = JSON.parse(event.data);
-
-        entityStats.html(parseInt(entityStats.html()) + 1);
-        if (agentData.status == "available") {
-            availableStats.html(parseInt(availableStats.html()) + 1);
-        } else if (agentData.status == "busy") {
-            busyStats.html(parseInt(busyStats.html()) + 1);
-        } else if (agentData.status == "preview") {
-            previewStats.html(parseInt(previewStats.html()) + 1);
-        } else if (
-            agentData.status == "logged-out" ||
-            agentData.status == "loggedout"
-        ) {
-            loggedOutStats.html(parseInt(loggedOutStats.html()) + 1);
-        } else if (agentData.status == "after") {
-            afterStats.html(parseInt(afterStats.html()) + 1);
-        }
 
         // check in all the displayed i elements if the agent is already present
         let present = false;
@@ -51,14 +25,12 @@ $(document).ready(() => {
         // check if the user is present
         let agent = $(`i[data-user-id='${agentData.id}']`);
         if (agent.length) {
-            let child = $(agent.children()[0]);
             present = true;
-            updateAgent(agent, agentData, child);
-        }
-
-        // create element per agent if not already present
-        if (!present) {
+            updateAgent(agent, agentData);
+        } else {
+            entityStats.html(parseInt(entityStats.html()) + 1);
             let element = createElement(agentData);
+            updateHomeStats(agentData.status);
             gridElement.prepend(element);
         }
     }
@@ -69,52 +41,70 @@ $(document).ready(() => {
      * @param {JSON} agentData Object containing information pertaining to the user we are updating
      * @param {jQuery Obj} childElemtn jQuery node element.
      */
-    function updateAgent(element, agentData, childElement) {
-        // element.css('color', newColor);
+    function updateAgent(element, agentData) {
+
+        // let childElement = $(element.children()[0]);
         // check if the element has any present colors if so remove then update
         if (element.hasClass("available")) {
-            element.toggleClass("available");
-        }
-        if (element.hasClass("busy")) {
-            element.toggleClass("busy");
-        }
-        if (element.hasClass("loggedout")) {
-            element.toggleClass("loggedout");
-        }
-        if (element.hasClass("preview")) {
-            element.toggleClass("preview");
-        }
-        if (element.hasClass("after")) {
-            element.toggleClass("after");
+            element.toggleClass("available", false);
+            availableStats.html(parseInt(availableStats.html()) - 1);
+        }else if (element.hasClass("busy")) {
+            element.toggleClass("busy", false);
+            busyStats.html(parseInt(availableStats.html()) - 1);
+            
+        } else if (element.hasClass("loggedout" || element.hasClass("logged-out"))) {
+            element.toggleClass("loggedout", false);
+            element.toggleClass("logged-out", false);
+            loggedOutStats.html(parseInt(availableStats.html()) - 1);
+        } else if (element.hasClass("preview")) {
+            element.toggleClass("preview", false);
+            previewStats.html(parseInt(availableStats.html()) - 1);
+
+        } else if (element.hasClass("after")) {
+            element.toggleClass("after", false);
+            afterStats.html(parseInt(availableStats.html()) - 1);
         }
 
         // update the new color
         element.toggleClass(agentData.status); // TODO: add error handling incase they pass an invalid name
-        element.attr("data-user-status", agentData.status);
+        updateHomeStats(agentData.status);
 
-        childElement.html(`${agentData.name}<br>${agentData.status}`);
+        $(element.children()[0]).html(`${agentData.name}<br>${agentData.status}`);
     }
 
     function createElement(agentData) {
         const nodeElement = document.createElement("i");
         const element = $(nodeElement);
-        // <span th:attr="class='tooltiptext'" th:utext="${agent.name +  ' <br>' +  agent.status}"></span>
+
         const spanElement = document.createElement("span");
         spanElement.classList.add("tooltiptext");
-        spanElement.innerHTML = `${agentData.name} <br> ${agentData.status}`;
+        spanElement.innerHTML = `${agentData.name} <br>${agentData.status}`;
 
-        element.addClass("fa-solid fa-circle agent-dot tooltipType");
-        element.addClass(agentData.status);
+        element.addClass(`fa-solid fa-circle agent-dot tooltipType ${agentData.status}`);
 
         // attributes to be used when hovering
-        element.attr("data-user-id", agentData.idString);
-        element.attr("data-user-status", agentData.status);
+        element.attr("data-user-id", agentData.id);
 
         element.append(spanElement);
-        // TODO: Add name to title for hover effect
-        // temp code below will display this when hovered.
-        // element.attr("title", `${agentData.id}\n${agentData.status}`);
 
         return element;
+    }
+
+    function updateHomeStats(status) {
+        // update stats
+        if (status == "available") {
+            availableStats.html(parseInt(availableStats.html()) + 1);
+        } else if (status == "busy") {
+            busyStats.html(parseInt(busyStats.html()) + 1);
+        } else if (status == "preview") {
+            previewStats.html(parseInt(previewStats.html()) + 1);
+        } else if (
+            status == "logged-out" ||
+            status == "loggedout"
+        ) {
+            loggedOutStats.html(parseInt(loggedOutStats.html()) + 1);
+        } else if (status == "after") {
+            afterStats.html(parseInt(afterStats.html()) + 1);
+        }
     }
 });
