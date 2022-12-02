@@ -6,27 +6,38 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+// import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.callservice.entity.AgentEntity;
 import com.callservice.service.AgentService;
+import com.callservice.utils.ValidatorHelper;
 
 
 /**
  * Rest API Controller - For sending updates for new agents.
  */
 @RestController
+// @Validated
 @RequestMapping("/api/v1")
 public class AgentRestController {
     Logger logger = LoggerFactory.getLogger(AgentRestController.class);
@@ -40,9 +51,11 @@ public class AgentRestController {
 
     // JUNIOR CRUD
     @RequestMapping(value = "/agent", method = RequestMethod.DELETE)
-    public ResponseEntity<Map<String, String>> deleteEntity(@RequestParam(name = "id", required = true) String entityID) {
+    public ResponseEntity<Map<String, String>> deleteEntity(@RequestParam(name = "id", required = true) @NotBlank @Size(min = 1) String entityID) {
         logger.debug("API Invoked: deleteEntity()");
         Map<String, String> ret = new HashMap<>();
+
+
         
         String deleteResponse = agentService.deleteEntity(entityID);
         ret.put("message", deleteResponse);
@@ -67,7 +80,7 @@ public class AgentRestController {
         logger.debug("API Invoked: filterAgents()");
         List<AgentEntity> entities;
         Map<String, Object> ret = new HashMap<>();
-        if (filter != null && validFilter(filter) == true) {
+        if (filter != null && ValidatorHelper.validFilter(filter)) {
             entities = agentService.filterEntities(filter);
         } else {
             entities = agentService.getEntities();
@@ -85,10 +98,15 @@ public class AgentRestController {
      * @return
      */
     @RequestMapping(value = "/agent", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, String>> saveOrUpdateEntity(@RequestBody AgentEntity entity) {
+    public ResponseEntity<Map<String, String>> saveOrUpdateEntity(@Valid @RequestBody AgentEntity entity) {
         logger.debug("API Invoked: saveOrUpdateEntity()");
         Map<String, String> ret = new HashMap<>();
         ResponseEntity<Map<String, String>> response;
+        
+        // Check if statuses are valid
+        if (!ValidatorHelper.validFilter(entity.getStatus()))
+            entity.setStatus("available");
+
 
         // parse the incoming body request assure proper fields
         for (SseEmitter emitter : emitters) {
@@ -144,11 +162,5 @@ public class AgentRestController {
         return sseEmitter;
     }
 
-    /** Method to verify user inputted a valid filter param */
-    private Boolean validFilter(String filter) {
-        return (filter.equalsIgnoreCase("available") || filter.equalsIgnoreCase("busy")
-                || filter.equalsIgnoreCase("logged-out") || filter.equalsIgnoreCase("preview")
-                || filter.equalsIgnoreCase("after"));
-    }
 
 } 

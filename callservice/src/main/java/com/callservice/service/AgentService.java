@@ -59,6 +59,7 @@ public class AgentService {
             agent = database.findAgent(entity.getId());
 
             if (agent != null) {
+                agent.updateEntity(entity);
                 agent = database.save(agent);
                 // logger.info("Updated entity: " + agent.getId());
                 retVal = "Updated entity";
