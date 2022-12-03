@@ -18,7 +18,7 @@ public class StatisticsHelper {
             if (agent.getStatus().equalsIgnoreCase("Busy")) allBusy++;
             if (agent.getStatus().equalsIgnoreCase("Preview")) allPreview++;
             if (agent.getStatus().equalsIgnoreCase("After")) allAfter++;
-            if (agent.getStatus().equalsIgnoreCase("LoggedOut")) allLoggedOut++;
+            if (agent.getStatus().equalsIgnoreCase("LoggedOut") || agent.getStatus().equalsIgnoreCase("logged-out")) allLoggedOut++;
         }
 
 
