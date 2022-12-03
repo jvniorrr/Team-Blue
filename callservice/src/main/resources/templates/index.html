@@ -48,8 +48,8 @@
             </div>
 
             <div class="page-links col-6 text-end px-3 flex-row">
-                <a href="#" class="px-1">Settings</a>
-                <a href="#" class="px-1">Log out</a>
+                <a href="/settings" class="px-1">Settings</a>
+                <a href="/" class="px-1">Log out</a>
             </div>
                 
     </nav>
@@ -67,30 +67,45 @@
         </div>
         <div class="entityInfo-item available">
             <p>
+                <button class="agent-filter-dot px-1" onclick="filter('available')">
+                    <i class="fa-solid fa-circle agent-filter-dot available"></i>
+                </button>
                 <b>Available:</b>
                 <span th:text="${available}" class="availableStats"></span>
             </p>
         </div>
         <div class="entityInfo-item busy">
             <p>
+                <button class="agent-filter-dot px-1" onclick="filter('busy')">
+                    <i class="fa-solid fa-circle agent-filter-dot busy"></i>
+                </button>
                 <b>Busy:</b>
                 <span th:text="${busy}" class="busyStats"></span>
             </p>
         </div>
         <div class="entityInfo-item preview">
             <p>
+                <button class="agent-filter-dot px-1" onclick="filter('preview')">
+                    <i class="fa-solid fa-circle agent-filter-dot preview"></i>
+                </button>
                 <b>Preview:</b>
                 <span th:text="${preview}" class="previewStats"></span>
             </p>
         </div>
         <div class="entityInfo-item loggedout">
             <p>
+                <button class="agent-filter-dot px-1" onclick="filter('logged-out')">
+                    <i class="fa-solid fa-circle agent-filter-dot loggedout"></i>
+                </button>
                 <b>Logged Out:</b>
                 <span th:text="${loggedout}" class="loggedOutStats"></span>
             </p>
         </div>
         <div class="entityInfo-item after">
             <p>
+                <button class="agent-filter-dot px-1" onclick="filter('after')">
+                    <i class="fa-solid fa-circle agent-filter-dot after"></i>
+                </button>
                 <b>After Work:</b>
                 <span th:text="${after}" class="afterStats"></span>
             </p>
