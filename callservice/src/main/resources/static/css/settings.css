@@ -15,8 +15,8 @@
 .card {
     background: var(--primary-dark);
     width: 300px;
-    padding: 30px;
+    padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 30px 25px rgba(0, 0, 0, 0.08);
 }
 
