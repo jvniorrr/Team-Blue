@@ -97,6 +97,21 @@ public class AgentController implements ErrorController {
         return "index";
     }
 
+    @RequestMapping(value = "/settings", method = {RequestMethod.GET})
+    public String settingsPage(Model model) {
+        List<AgentEntity> agents = entityService.getEntities();
+        StatisticsHelper entityInformation = new StatisticsHelper(agents);
+        
+        model.addAttribute("agents", agents);
+        model.addAttribute("available", entityInformation.getAllAvailable());
+        model.addAttribute("busy", entityInformation.getAllBusy());
+        model.addAttribute("preview", entityInformation.getAllPreview());
+        model.addAttribute("after", entityInformation.getAllAfter());
+        model.addAttribute("loggedout", entityInformation.getAllLoggedOut());
+
+        return "settings";
+    }
+
 
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request) {
