@@ -95,7 +95,7 @@ $(document).ready(() => {
         ]);
 
         circleChart.updateSeries([
-            availableStats, busyStats, previewStats, loggedOutStats, afterStats,
+            (availableStats / entityStats) * 100, (busyStats / entityStats) * 100 , (previewStats / entityStats) * 100, (loggedOutStats / entityStats) * 100, (afterStats / entityStats) * 100,
         ]);
     }
 });
