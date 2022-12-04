@@ -116,6 +116,12 @@ a:hover {
     text-align: center;
 }
 
+.agent-filter-dot {
+    background-color: var(--primary-dark);
+    border: none;
+    font-size:0.8rem;
+}
+
 .agent-dot {
     /* filter: drop-shadow(0rem 0rem .3rem #A3A3A3); */
     margin: 0rem 0.05rem !important;
