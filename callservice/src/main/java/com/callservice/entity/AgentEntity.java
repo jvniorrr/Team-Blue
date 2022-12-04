@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * when setting values in Database.
  */
 @Entity
-@Table(name = "AGENT_TBL")
+@Table(name = "AGENT")
 public class AgentEntity {
     // Fields
     @Id
