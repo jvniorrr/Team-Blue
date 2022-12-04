@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -11,6 +11,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/landing.css">
+    <script src="/js/landing.js" defer></script>
 
     <script src="/webjars/jquery/jquery.min.js"></script>
 
@@ -31,7 +32,7 @@
       
           <!-- Icon -->
           <div class="fadeIn first">
-            <span id = "response-bar"  th:text = "${response.message}"></span>
+            <span th:if = "${response}" id = "response-bar"  th:text = "${response.message}"></span>
           </div>
       
           <!-- <span class="error_span" style="color: red;font-size: 13px;display: none;">Username/Password does not match.</span> -->
@@ -55,7 +56,5 @@
       </div>
 
 </body>
-
-<script src="/js/landing.js" defer></script>
 
 </html>
