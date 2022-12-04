@@ -92,7 +92,7 @@ For building and running the application you need:
     ```sh
     git clone hhttps://github.com/ericjiang255/Team-Blue.git
     ```
-2. Change directory to where you have cloned the repository. Once you are in the directory of the cloned repository `cd "callservice/src/main/java/com/callservice/callservice/"`
+2. Change directory to where you have cloned the repository. Once you are in the directory of the cloned repository `cd "callservice/src/main/java/com/callservice/"`
 3. There are several ways to run the Application on your local machine. One way is to execute the main method in the CallserviceApplication class from your IDE.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -103,7 +103,7 @@ For building and running the application you need:
 
 ### Documentation
 
-https://app.swaggerhub.com/apis-docs/J_2/Call-Service-Team-Blue/1.0.0
+https://app.swaggerhub.com/apis/J_2/Call-Service-Team-Blue/1.0.0#/
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -115,7 +115,7 @@ https://app.swaggerhub.com/apis-docs/J_2/Call-Service-Team-Blue/1.0.0
 -   [x] Server Side Event to emit calls.
 -   [x] Create SQL Models
 -   [x] Integrate SQL with our frontend, so if client refreshes HTML changes stay persistent
--   [ ] Tweak SSE to not time out, and make asynchronous code.
+-   [x] Tweak SSE to not time out, and make asynchronous code.
 
 ### Frontend
 

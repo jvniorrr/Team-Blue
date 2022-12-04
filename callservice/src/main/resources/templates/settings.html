@@ -9,21 +9,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/index.css"> 
+    <link rel="stylesheet" href="/css/settings.css"> 
 
     <script src="/webjars/jquery/jquery.min.js"></script>
-    <script src="/js/index.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts" defer></script>
+    <script src="/js/settings.js" defer></script>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Agent Overview</title>
+    <title>Settings Page</title>
 </head>
 <body>
+
     <!--/* NAVBAR */-->
     <nav class="navbar flex justify-content-center align-items-start">
-        <!-- <a class="navbar-brand mx-auto" href="#"> -->
-            <!-- <svg id="Layer_1" class="nav-title" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="216 211.50714111328125 360.0010986328125 188.99331665039062"><title>Five9</title><path d="M234.69,314.52h43.8a72.39,72.39,0,0,1,4.68-17.47H216V398h18.69V356.69h40.57V339.22H234.69Z"></path><path d="M305.38,314.52a46.31,46.31,0,0,1,62-33.36,58.78,58.78,0,0,1,116.69.11,53.1,53.1,0,0,1,73.87,48.86c0,15.64-5.51,27.27-14,38.16h20.55A67.73,67.73,0,0,0,576,330.13a71,71,0,0,0-79.11-70.72,76.86,76.86,0,0,0-142.65.64c-1.17-.06-2.33-.1-3.51-.1A64.62,64.62,0,0,0,287,314.52Z"></path><rect x="286.85" y="322.29" width="18.15" height="75.74"></rect><path d="M312.78,322.29h19.65l18.29,50.23h.4l17.2-50.23h19.92L357.54,398h-14.2Z"></path><path d="M482.27,398l22.38-34.12a18.83,18.83,0,0,1-4.91.41c-14.33-.14-29.89-12.69-29.89-32.89,0-21.43,16.51-36.3,34.94-36.3,18.15,0,35.07,14.05,35.07,36.16a37.27,37.27,0,0,1-2.32,12.56,59.1,59.1,0,0,1-5.87,11.33L503.56,398Zm22.66-85.71c-11.06,0-16.93,9.55-16.93,17.47,0,10.24,7,17.74,16.93,17.74,10.91,0,16.78-9.55,16.78-17.05C521.71,320.52,514.48,312.33,504.93,312.33Z"></path><path d="M442.43,376.07c-3.54,5-9.08,7.78-16.26,7.78-13,0-20.06-10.65-20.88-15.56h58.82a41.77,41.77,0,0,0,1.09-9.15c0-19.1-15.15-39.85-39.17-39.85-23.33,0-39.84,19.65-39.84,41.08a39.81,39.81,0,0,0,40,40.13C443.08,400.5,457,389,462,376.07Zm-16.26-40.13c9,0,18.42,5.6,20.47,17.75h-41.9C408.16,339.62,419.48,335.94,426.17,335.94Z"></path><path d="M529.84,391.79a8.49,8.49,0,0,1,8.73-8.81c5.5,0,9,3.83,9,8.69a8.86,8.86,0,0,1-17.71.12Zm16.17-.12c0-4.12-2.79-7.25-7.43-7.23a7.31,7.31,0,0,0,.15,14.62C543.33,399,546,395.85,546,391.67Zm-10.35-4.55h3.49a3,3,0,0,1,3.24,2.9,2.77,2.77,0,0,1-1.62,2.68l2,3.69H541L539.35,393h-2.07l0,3.35h-1.59Zm3.38,4.54a1.59,1.59,0,1,0,0-3.18h-1.76l0,3.18Z"></path></svg> -->
-            <!-- <h2 class="mx-auto nav-title">Agent Service</h2> -->
             <div class="logo col-6 text-end">
                 <svg width="144" height="70" viewBox="0 0 144 70" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_113_1050)">
@@ -48,12 +47,13 @@
             </div>
 
             <div class="page-links col-6 text-end px-3 flex-row">
-                <a href="/stats" class="px-1">Settings</a>
+                <a href="/" class="px-1">Home</a>
                 <a href="/" class="px-1">Log out</a>
             </div>
                 
     </nav>
     <!--/* NAVBAR */-->
+
 
     <!-- ENTITY INFORMATION ROW -->
     <section id="entityInfo" class="d-flex justify-content-around m-4 px-4">
@@ -67,45 +67,30 @@
         </div>
         <div class="entityInfo-item available">
             <p>
-                <button class="agent-filter-dot px-1" onclick="filter('available')">
-                    <i class="fa-solid fa-circle agent-filter-dot available"></i>
-                </button>
                 <b>Available:</b>
                 <span th:text="${available}" class="availableStats"></span>
             </p>
         </div>
         <div class="entityInfo-item busy">
             <p>
-                <button class="agent-filter-dot px-1" onclick="filter('busy')">
-                    <i class="fa-solid fa-circle agent-filter-dot busy"></i>
-                </button>
                 <b>Busy:</b>
                 <span th:text="${busy}" class="busyStats"></span>
             </p>
         </div>
         <div class="entityInfo-item preview">
             <p>
-                <button class="agent-filter-dot px-1" onclick="filter('preview')">
-                    <i class="fa-solid fa-circle agent-filter-dot preview"></i>
-                </button>
                 <b>Preview:</b>
                 <span th:text="${preview}" class="previewStats"></span>
             </p>
         </div>
         <div class="entityInfo-item loggedout">
             <p>
-                <button class="agent-filter-dot px-1" onclick="filter('logged-out')">
-                    <i class="fa-solid fa-circle agent-filter-dot loggedout"></i>
-                </button>
                 <b>Logged Out:</b>
                 <span th:text="${loggedout}" class="loggedOutStats"></span>
             </p>
         </div>
         <div class="entityInfo-item after">
             <p>
-                <button class="agent-filter-dot px-1" onclick="filter('after')">
-                    <i class="fa-solid fa-circle agent-filter-dot after"></i>
-                </button>
                 <b>After Work:</b>
                 <span th:text="${after}" class="afterStats"></span>
             </p>
@@ -113,23 +98,41 @@
     </section>
     <!-- ENTITY INFORMATION ROW -->
 
+    <!-- STATISTICS COLUMNS -->
     <!-- AGENT DOT CONTAINERS -->
     <section class="p-2 my-container" >
-        <div class="container-fluid px-4">
-            <div class="row">
-                <!--/* GRID RENDER */-->
-                <div id="dots-grid">
-                    <i th:each="agent : ${agents}" th:attr="class='fa-solid fa-circle agent-dot tooltipType '+${agent.status}, data-user-id=${agent.id}">
-                        <span th:attr="class='tooltiptext'" th:utext="${agent.name +  ' <br>' +  agent.status}"></span>
-                    </i>
+        <div class="container-fluid d-flex flex-row">
+            <div class="w-100 p-4">
+                <div class="card w-100">
+                    <div id="bar-chart">
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 p-4">
+                <div class="card w-100">
+                    <div id="circle-chart" class="circle-ch"></div>
+                </div>
+            </div>
+            <div class="w-100 text-white">
+                <div class="card w-100">
+                    <div id="donut-chart"></div>
                 </div>
             </div>
         </div>
+        <!-- <div class="d-flex flex-row container-fluid">
+            <div class="w-100 ">
+                <div class="card w-100 text-white">
+                    <div id="option-choices">
+                        <h1>Status Colors</h1>
+                        <input type="radio" name="color" value="available">
+                    </div>
+                </div>
+            </div>
+        </div> -->
     </section>
-    <!-- AGENT DOT CONTAINERS -->
+    <!-- STATISTICS COLUMNS -->
 
-
-
-
+    
+    
 </body>
 </html>

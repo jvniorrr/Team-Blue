@@ -1,7 +1,9 @@
 package com.callservice.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import org.slf4j.Logger;
@@ -59,6 +61,7 @@ public class AgentService {
             agent = database.findAgent(entity.getId());
 
             if (agent != null) {
+                agent.updateEntity(entity);
                 agent = database.save(agent);
                 // logger.info("Updated entity: " + agent.getId());
                 retVal = "Updated entity";
@@ -85,12 +88,13 @@ public class AgentService {
      * @return String
      */
     @Transactional
-    public String deleteEntity(AgentEntity entity) {
+    public String deleteEntity(String entity) {
         long start = System.currentTimeMillis();
         AgentEntity agent;
         String response = "Not found";
         try {
-            agent = database.findAgent(entity.getId());
+            // agent = database.findAgent(entity.getId());
+            agent = database.findAgent(entity);
             if (agent != null) {
                 database.delete(agent);
                 response = "Deleted entity";
@@ -103,6 +107,34 @@ public class AgentService {
         long end = System.currentTimeMillis();
         logger.info("Transaction time: {}ms", (end - start));
         return response;
+    }
+
+    @Transactional
+    public Map<String, String> deleteAgentEntity(String entity) {
+        long start = System.currentTimeMillis();
+
+        Map<String, String> map = new HashMap<>();
+        AgentEntity agent;
+        String response = "Not found";
+        try {
+            // agent = database.findAgent(entity.getId());
+            agent = database.findAgent(entity);
+            if (agent != null) {
+                map.put("id", agent.getId());
+                map.put("status", agent.getStatus());
+                database.delete(agent);
+                response = "Deleted entity";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = "Error";
+        }
+        map.put("response", response);
+
+
+        long end = System.currentTimeMillis();
+        logger.info("Transaction time: {}ms", (end - start));
+        return map;
     }
 
     /**

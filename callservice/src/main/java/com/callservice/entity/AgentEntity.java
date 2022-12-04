@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -22,9 +24,16 @@ public class AgentEntity {
     @Column(name = "storeId", unique = true)
     private Integer storeId; // Id for referencing in DB
 
-    private String name, status;
+    @NotEmpty(message = "name must not be empty")
+    private String name;
+
+    @NotEmpty(message = "status must not be empty")
+    private String status;
+
     // custom column name
+    // TODO: add regex validation on the ID (preferable be a UUID type object)
     @Column(unique = true)
+    @NotEmpty(message = "id must not be empty")
     private String id;
     // timestamps
     private Date created = new Date(), updatedTS = null;
@@ -68,12 +77,12 @@ public class AgentEntity {
     // Setters
     public void setName(String name) {
         this.name = name;
-        setUpdatedTS(new Date());
+        // setUpdatedTS(new Date());
     }
 
     public void setStatus(String status) {
         this.status = status;
-        setUpdatedTS(new Date());
+        // setUpdatedTS(new Date());
     }
 
     public void setStore(Integer storeId) {
@@ -90,6 +99,14 @@ public class AgentEntity {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public void updateEntity(AgentEntity updateObj) {
+        if (!this.getName().equalsIgnoreCase(updateObj.getName())) this.setName(updateObj.getName());
+
+        if (!this.getStatus().equalsIgnoreCase(updateObj.getStatus())) this.setStatus(updateObj.getStatus());
+        
+        this.setUpdatedTS(new Date());
     }
 
     // TO STRING
