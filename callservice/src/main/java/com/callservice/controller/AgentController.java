@@ -46,12 +46,6 @@ public class AgentController implements ErrorController {
         return "landing";
     }
 
-    @RequestMapping(value = {"/stats"}, method = {RequestMethod.GET})
-    public String howdy() 
-    {
-        return "stats";
-    }
-
     @RequestMapping(value = { "/home"}, method = {RequestMethod.GET})
     public String hello(Model model,
             @RequestParam(name = "status", required = false) String filter) 
@@ -82,7 +76,7 @@ public class AgentController implements ErrorController {
         return "index";
     }
 
-    @RequestMapping(value = "/settings", method = {RequestMethod.GET})
+    @RequestMapping(value = "/stats", method = {RequestMethod.GET})
     public String settingsPage(Model model) {
         List<AgentEntity> agents = entityService.getEntities();
         StatisticsHelper entityInformation = new StatisticsHelper(agents);
@@ -94,7 +88,7 @@ public class AgentController implements ErrorController {
         model.addAttribute("after", entityInformation.getAllAfter());
         model.addAttribute("loggedout", entityInformation.getAllLoggedOut());
 
-        return "settings";
+        return "stats";
     }
 
 

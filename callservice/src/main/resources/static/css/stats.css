@@ -1,61 +1,21 @@
-body
-{
-    background-color: #1f1e1e;
-    font-size: 100%;
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
+:root {
+    --color-default: #e2dede;
+    --color-label: #a7a7a7;
 }
 
-#graph-wrapper
-{
-    background-color: #F4EDED;
-    width: 65vw;
-    height: 85vh;
-    position: relative;
-    top: 2rem;
-    left: 17%;
-    border: 1px solid rgba(0, 0, 0, 0);
-    box-shadow: 0rem 1rem 2rem 0.25rem rgba(0, 0, 0, 0.25);
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-areas: 
-        " bars bars pies pies "
-        " trends trends trends trends ";
+
+.apexcharts-tooltip {
+    background: #fff;
+    color: var(--primary-dark);
+    box-shadow: none;
+    border: 1px solid #e7e7e7;
+    padding: 8px;
 }
 
-.border
-{
-    margin-top: 4%;
-    background-color: #363333;
-    border-radius: 1rem;
-    position: relative;
-    left: 5%;
-    width: 29.25vw;
-    height: 40vh;
-}
-
-.borderve
-{
-    background-color: #363333;
-    width: 61.5vw;
-    height: 35vh;
-    position: relative;
-    left: 1.7vw;
-    border-radius: 1rem;
-}
-
-#bar-wrap
-{
-    grid-area: bars;
-}
-
-#pie-wrap
-{
-    grid-area: pies;
-}
-
-#trend-wrap
-{
-    grid-area: trends;
+.card {
+    background: var(--primary-dark);
+    width: 300px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 30px 25px rgba(0, 0, 0, 0.08);
 }
