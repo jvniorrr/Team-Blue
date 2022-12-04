@@ -1,21 +1,17 @@
 package com.callservice.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.callservice.auth.Authenticate;
 import com.callservice.entity.AgentEntity;
 import com.callservice.service.AgentService;
 
@@ -30,41 +26,28 @@ public class AgentController {
     Logger logger = LoggerFactory.getLogger(AgentController.class);
 
     @Autowired
-    private Environment env;
-
-    @Autowired
     private AgentService entityService;
-
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public AgentController() {}
 
     //only allow get method in case of address bar url invocation and post method so front can securely send data
     //any other methods should not be allowed to this route so server will automatically return error page in such case
-    @RequestMapping(value = {"/", "/home"}, method = {RequestMethod.GET, RequestMethod.POST})
-    public String hello(Model model,
-            @RequestParam(name = "status", required = false) String filter,
-            @RequestParam(name = "key", required = false) Optional<String> auth) 
+    @RequestMapping(value = {"/landing"}, method = {RequestMethod.GET})
+    public String ahoy() 
     {
+        return "landing";
+    }
 
-        Authenticate authResult = new Authenticate();
-        boolean breaker = false;
-                
-        if (!auth.isPresent())
-        {
-            breaker = true;
-        }
-        else if (!encoder.matches(auth.get(), env.getProperty("api.key")))
-        {
-            authResult.setMessage("Denied");
-            breaker = true;
-        }
+    @RequestMapping(value = {"/stats"}, method = {RequestMethod.GET})
+    public String howdy() 
+    {
+        return "stats";
+    }
 
-        if (breaker)
-        {
-            model.addAttribute("response", authResult);
-            return "landing";
-        }
+    @RequestMapping(value = { "/home"}, method = {RequestMethod.GET})
+    public String hello(Model model,
+            @RequestParam(name = "status", required = false) String filter) 
+    {
 
         List<AgentEntity> agents;
         filter = filter != null ? (filter.equalsIgnoreCase("loggedout") ? "logged-out" : filter)
