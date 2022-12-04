@@ -371,4 +371,3 @@ function updateSettings() {
 var circleChart = new ApexCharts(document.querySelector("#circle-chart"), circleOptions);
 var barChart = new ApexCharts(document.querySelector("#bar-chart"), barOptions);
 var donutChart = new ApexCharts(document.querySelector("#donut-chart"), donutOptions);
-
