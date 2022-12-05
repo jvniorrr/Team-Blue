@@ -152,7 +152,7 @@ i .agent-dot:hover {
 i.fa-circle {
     color: var(--secondary-dark);
 }
-.available {
+/* .available {
     color: var(--agent-available-color) !important;
 }
 .busy {
@@ -168,7 +168,7 @@ i.fa-circle {
 .after,
 .after-work {
     color: var(--agent-after-color) !important;
-}
+} */
 
 #dots-grid {
     max-height: 100vh;

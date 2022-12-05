@@ -13,6 +13,7 @@
 
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts" defer></script>
+    <script src="/js/settings.js" defer></script>
     <script src="/js/stats.js" defer></script>
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -119,16 +120,41 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="d-flex flex-row container-fluid">
+        <div class="d-flex flex-row container-fluid">
             <div class="w-100 ">
                 <div class="card w-100 text-white">
-                    <div id="option-choices">
+                    <div id="option-choices d-flex flex-row">
                         <h1>Status Colors</h1>
-                        <input type="radio" name="color" value="available">
+                        <div id="available-option">
+                            
+                            <label for="available-color">Available Color</label>
+                            <input type="color" name="available-color" id="available-color-option">
+                        </div>
+                        <div id="busy-option">
+                            <label for="busy-color">Busy Color</label>
+                            <input type="color" name="busy-color" id="busy-color-option">
+                        </div>
+                        <div id="preview-option">
+                            <label for="preview-color">Preview Color</label>
+                            <input type="color" name="preview-color" id="preview-color-option">
+                        </div>
+                        <div id="loggedout-option">
+                            <label for="loggedout-color">Logged Out Color</label>
+                            <input type="color" name="loggedout-color" id="loggedout-color-option">
+                        </div>
+                        <div id="after-option">
+                            <label for="after-color">After Color</label>
+                            <input type="color" name="after-color" id="after-color-option">
+                        </div>
+
+                        <!-- <div id="color-picker">
+                            <canvas id="color-block" height="150" width="150"></canvas>
+                            <canvas id="color-strip" height="150" width="30"></canvas>
+                          </div> -->
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
     </section>
     <!-- STATISTICS COLUMNS -->
 

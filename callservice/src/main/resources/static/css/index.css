@@ -59,22 +59,22 @@ body {
     color: var(--agent-dark);
 }
 .available {
-    color: var(--agent-available-bright-color) !important;
+    color: var(--agent-available-bright-color);
 }
 .busy {
-    color: var(--agent-busy-bright-color) !important;
+    color: var(--agent-busy-bright-color);
 }
 .logged-out,
 .loggedout {
-    color: var(--agent-loggedout-color) !important;
+    color: var(--agent-loggedout-color);
 }
 .preview {
-    color: var(--agent-preview-bright-color) !important;
+    color: var(--agent-preview-bright-color);
 }
 .after,
 .after-work,
 .afterwork {
-    color: var(--agent-after-color) !important;
+    color: var(--agent-after-color);
 }
 .agent-dot {
     font-size: 0.6rem;

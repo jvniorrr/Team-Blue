@@ -16,14 +16,6 @@ $(document).ready(() => {
     source.addEventListener("deleteAgent", deleteHandler);
 });
 
-setInterval(() => {
-    if (filterToggled) {
-        filterToggled = !filterToggled;
-        resetFilters();
-    }
-}, (1000 * 60 * 3)); // 1 minute time out; ms * seconds * m
-
-
 
 /**
  * Method to handle the event listener. Awaits events and parses data to be pushed onto frontend.
