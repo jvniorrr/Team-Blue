@@ -6,11 +6,12 @@ let busyStats = $(".busyStats");
 let previewStats = $(".previewStats");
 let loggedOutStats = $(".loggedOutStats");
 let afterStats = $(".afterStats");
+let gridElement
 
 // Hanlder for events being emitted
 $(document).ready(() => {
     var source = new EventSource("/api/v1/init");
-    var gridElement = $("#dots-grid");
+    gridElement = $("#dots-grid");
 
     source.addEventListener("updateAgent", EventHandler);
     source.addEventListener("deleteAgent", deleteHandler);
