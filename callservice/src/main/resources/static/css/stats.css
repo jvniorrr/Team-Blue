@@ -19,3 +19,33 @@
     border-radius: 10px;
     box-shadow: 0 30px 25px rgba(0, 0, 0, 0.08);
 }
+
+
+
+
+/* color picker */
+#color-input {
+    display: none;
+  }
+#color-label {
+    margin-left: 15px;
+    position: absolute;
+    height: 30px;
+    width: 50px;
+  } 
+#color-input:checked ~ #color-picker {
+    opacity: 1;
+  }
+#color-picker {
+    position: absolute;
+    left: 70px; 
+    background-color: white;
+    height: 150px;
+    width: 185px;
+    border: solid 1px #ccc;
+    opacity: 0;
+    padding: 5px;
+  }
+canvas:hover {
+    cursor: crosshair;
+  }
