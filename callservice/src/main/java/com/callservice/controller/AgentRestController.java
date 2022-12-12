@@ -118,8 +118,7 @@ public class AgentRestController {
         ResponseEntity<Map<String, String>> response;
         
         // Check if statuses are valid
-        if (!ValidatorHelper.validFilter(entity.getStatus()))
-            entity.setStatus("available");
+        entity.setStatus(ValidatorHelper.statusVerify(entity.getStatus()));
 
 
         // parse the incoming body request assure proper fields
