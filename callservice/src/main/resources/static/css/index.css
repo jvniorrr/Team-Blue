@@ -8,6 +8,7 @@
     --secondary-color: #bb86fc;
     --agent-dark: #5e5e5e;
     --team-blue-primary: #a3e0ff;
+    --team-blue-secondary: #B782F8;
 
     /* agent colors */
     --agent-available-color: #008276;
@@ -90,8 +91,8 @@ body {
 
 a {
     text-decoration: none;
-    /* color: var(--secondary-color); */
     color: rgb(163, 224, 255);
+    transition: 0.2s;
 }
 a:hover {
     color: rgba(163, 224, 255, 0.8);
@@ -106,7 +107,7 @@ a:hover {
 .tooltipType .tooltiptext {
     visibility: hidden;
     background-color: #222222;
-    color: var(--secondary-color);
+    color: var(--team-blue-primary);
     border-radius: 3px;
     padding: 3px 10px 6px;
     position: absolute;
@@ -117,7 +118,7 @@ a:hover {
 }
 
 .agent-filter-dot {
-    background-color: var(--primary-dark);
+    background-color: transparent;
     border: none;
     font-size:0.8rem;
 }

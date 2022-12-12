@@ -2,7 +2,7 @@
 let options = JSON.parse(localStorage.getItem("options"));
 
 let defaultTeamColor = getComputedStyle(document.documentElement).getPropertyValue("--team-blue-primary")
-let agentAvailableColor, agentBusyColor, agentPreviewColor, agentLoggedOutColor, agentAfterColor;
+let agentAvailableColor, agentBusyColor, agentPreviewColor, agentLoggedOutColor, agentAfterColor, tooltipColor;
 
 
 $(document).ready(() => {
@@ -13,14 +13,35 @@ $(document).ready(() => {
         agentPreviewColor = opts.preview;
         agentLoggedOutColor = opts.loggedout;
         agentAfterColor = opts.after;
+        tooltipColor = opts.tooltip;
     } else { 
         agentAvailableColor = getComputedStyle(document.documentElement).getPropertyValue("--agent-available-bright-color").trim();
         agentBusyColor = getComputedStyle(document.documentElement).getPropertyValue("--agent-busy-bright-color").trim();
         agentPreviewColor = getComputedStyle(document.documentElement).getPropertyValue("--agent-preview-bright-color").trim();
         agentLoggedOutColor = getComputedStyle(document.documentElement).getPropertyValue("--agent-loggedout-color").trim();
         agentAfterColor = getComputedStyle(document.documentElement).getPropertyValue("--agent-after-color").trim();
+        tooltipColor = getComputedStyle(document.documentElement).getPropertyValue("--team-blue-primary").trim();
     }
 
+    var cssRuleCode = document.all ? 'rules' : 'cssRules'; //account for IE and FF
+    var rules = document.styleSheets[3][cssRuleCode];
+    for (let i=0; i<rules.length; i++) {
+        let currRule = rules[i].selectorText;
+        if (currRule == ".available") {
+            rules[i].style.color = agentAvailableColor
+        } else if (currRule == ".busy") {
+            rules[i].style.color = agentBusyColor;
+        } else if (currRule == ".logged-out, .loggedout") {
+            rules[i].style.color = agentLoggedOutColor;
+        } else if (currRule == ".preview") {
+            rules[i].style.color = agentPreviewColor;
+        } else if (currRule == ".after, .after-work, .afterwork") {
+            rules[i].style.color = agentAfterColor;
+        } else if (currRule == ".tooltipType .tooltiptext") {
+            rules[i].style.color = tooltipColor;
+        }
+    }
+    
     setupDots();
     setEntityRow();
 });
@@ -30,7 +51,7 @@ $(document).ready(() => {
 // change the settings for color on when supervisor likes by using local storage
 $("#available-color-option").on("input", () => {
     let availableColor = $("#available-color-option").val();
-    let opts = JSON.parse(localStorage.getItem("options")) || { "available": agentAvailableColor, "busy": agentBusyColor, "preview": agentPreviewColor, "loggedout": agentLoggedOutColor, "after": agentAfterColor };
+    let opts = JSON.parse(localStorage.getItem("options")) || { "available": agentAvailableColor, "busy": agentBusyColor, "preview": agentPreviewColor, "loggedout": agentLoggedOutColor, "after": agentAfterColor, "tooltip": tooltipColor };
 
     opts.available = agentAvailableColor = availableColor;
     localStorage.setItem("options", JSON.stringify(opts));
@@ -39,7 +60,7 @@ $("#available-color-option").on("input", () => {
 });
 $("#busy-color-option").on("input", () => {
     let busyColor = $("#busy-color-option").val();
-    let opts = JSON.parse(localStorage.getItem("options")) || { "available": agentAvailableColor, "busy": agentBusyColor, "preview": agentPreviewColor, "loggedout": agentLoggedOutColor, "after": agentAfterColor };
+    let opts = JSON.parse(localStorage.getItem("options")) || { "available": agentAvailableColor, "busy": agentBusyColor, "preview": agentPreviewColor, "loggedout": agentLoggedOutColor, "after": agentAfterColor, "tooltip": tooltipColor };
 
     opts.busy = agentBusyColor = busyColor;
     localStorage.setItem("options", JSON.stringify(opts));
@@ -48,7 +69,7 @@ $("#busy-color-option").on("input", () => {
 });
 $("#preview-color-option").on("input", () => {
     let previewColor = $("#preview-color-option").val();
-    let opts = JSON.parse(localStorage.getItem("options")) || { "available": agentAvailableColor, "busy": agentBusyColor, "preview": agentPreviewColor, "loggedout": agentLoggedOutColor, "after": agentAfterColor };
+    let opts = JSON.parse(localStorage.getItem("options")) || { "available": agentAvailableColor, "busy": agentBusyColor, "preview": agentPreviewColor, "loggedout": agentLoggedOutColor, "after": agentAfterColor, "tooltip": tooltipColor };
 
     opts.preview = agentPreviewColor = previewColor;
     localStorage.setItem("options", JSON.stringify(opts));
@@ -57,7 +78,7 @@ $("#preview-color-option").on("input", () => {
 });
 $("#after-color-option").on("input", () => {
     let afterColor = $("#after-color-option").val();
-    let opts = JSON.parse(localStorage.getItem("options")) || { "available": agentAvailableColor, "busy": agentBusyColor, "preview": agentPreviewColor, "loggedout": agentLoggedOutColor, "after": agentAfterColor };
+    let opts = JSON.parse(localStorage.getItem("options")) || { "available": agentAvailableColor, "busy": agentBusyColor, "preview": agentPreviewColor, "loggedout": agentLoggedOutColor, "after": agentAfterColor, "tooltip": tooltipColor };
 
     opts.after = agentAfterColor = afterColor;
     localStorage.setItem("options", JSON.stringify(opts));
@@ -66,9 +87,18 @@ $("#after-color-option").on("input", () => {
 });
 $("#loggedout-color-option").on("input", () => {
     let loggedoutColor = $("#loggedout-color-option").val();
-    let opts = JSON.parse(localStorage.getItem("options")) || { "available": agentAvailableColor, "busy": agentBusyColor, "preview": agentPreviewColor, "loggedout": agentLoggedOutColor, "after": agentAfterColor };
+    let opts = JSON.parse(localStorage.getItem("options")) || { "available": agentAvailableColor, "busy": agentBusyColor, "preview": agentPreviewColor, "loggedout": agentLoggedOutColor, "after": agentAfterColor, "tooltip": tooltipColor };
 
     opts.loggedout = agentLoggedOutColor = loggedoutColor;
+    localStorage.setItem("options", JSON.stringify(opts));
+    updateChartStyle();
+    setEntityRow();
+});
+$("#tooltip-color-option").on("input", () => {
+    let tooltipColor = $("#tooltip-color-option").val();
+    let opts = JSON.parse(localStorage.getItem("options")) || { "available": agentAvailableColor, "busy": agentBusyColor, "preview": agentPreviewColor, "loggedout": agentLoggedOutColor, "after": agentAfterColor, "tooltip": defaultTeamColor };
+
+    opts.tooltip = defaultTeamColor = tooltipColor;
     localStorage.setItem("options", JSON.stringify(opts));
     updateChartStyle();
     setEntityRow();
@@ -103,14 +133,17 @@ function setupDots() {
         agentPreviewColor = opts.preview;
         agentLoggedOutColor = opts.loggedout;
         agentAfterColor = opts.after;
+        tooltipColor = opts.tooltip;
     }
 
     document.querySelectorAll(".available").forEach( (dot) => {
         let jDot = $(dot);
+        dot.style.setProperty("color", agentAvailableColor);
         jDot.css("color", agentAvailableColor);
     });
     document.querySelectorAll(".busy").forEach( (dot) => {
         let jDot = $(dot);
+        dot.style.setProperty("color", agentBusyColor);
         jDot.css("color", agentBusyColor);
     });
     document.querySelectorAll(".preview").forEach( (dot) => {
@@ -125,6 +158,10 @@ function setupDots() {
         let jDot = $(dot);
         jDot.css("color", agentAfterColor);
     });
+
+    document.querySelectorAll(".tooltiptext").forEach((el) => {
+        $(el).css("color", tooltipColor);
+    })
 
 }
 

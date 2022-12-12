@@ -6,7 +6,7 @@ let busyStats = $(".busyStats");
 let previewStats = $(".previewStats");
 let loggedOutStats = $(".loggedOutStats");
 let afterStats = $(".afterStats");
-let gridElement
+let gridElement;
 
 // Hanlder for events being emitted
 $(document).ready(() => {

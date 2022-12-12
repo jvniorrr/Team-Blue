@@ -93,18 +93,21 @@ function setupOptions() {
         if (opts.preview) agentPreviewColor = opts.preview;
         if (opts.loggedout) agentLoggedOutColor = opts.loggedout;
         if (opts.after) agentAfterColor = opts.after;
+        if (opts.tooltip) tooltipColor = opts.tooltip;
     } else {
         agentAvailableColor = getComputedStyle(document.documentElement).getPropertyValue("--agent-available-bright-color").trim();
         agentBusyColor = getComputedStyle(document.documentElement).getPropertyValue("--agent-busy-bright-color").trim();
         agentPreviewColor = getComputedStyle(document.documentElement).getPropertyValue("--agent-preview-bright-color").trim();
         agentLoggedOutColor = getComputedStyle(document.documentElement).getPropertyValue("--agent-loggedout-color").trim();
         agentAfterColor = getComputedStyle(document.documentElement).getPropertyValue("--agent-after-color").trim();
+        tooltipColor = getComputedStyle(document.documentElement).getPropertyValue("--team-blue-primary").trim();
     }
     $("#available-color-option").val(agentAvailableColor);
     $("#busy-color-option").val(agentBusyColor);
     $("#preview-color-option").val(agentPreviewColor);
     $("#loggedout-color-option").val(agentLoggedOutColor);
     $("#after-color-option").val(agentAfterColor);
+    $("#tooltip-color-option").val(tooltipColor);
     // Default Chart Options
     const defaultOptions = {
         chart: {
@@ -119,7 +122,6 @@ function setupOptions() {
             },
             width: "100%",
             height: 380,
-            offsetY: 8,
         },
         stroke: {
             linecap: "round",
