@@ -255,8 +255,7 @@ function setupOptions() {
                     value: {
                         color: "#fff",
                         formatter: (val) => {
-                            let val2 = (val) * 100;
-                            return val.toString().substring(0, 3) + "%";
+                            return parseFloat(val).toFixed(1)  + "%";
                         },
                     },
                 },
@@ -307,7 +306,7 @@ function setupOptions() {
         dataLabels: {
             enabled: true,
             formatter: (val, opts) => {
-                return val.toString().substring(0, 3) + "%";
+                return parseFloat(val).toFixed(1) + "%";
             },
         },
         legend: {
@@ -341,7 +340,7 @@ function setupOptions() {
             fillSeriesColor: false,
             y: {
                 formatter: (val) => {
-                    return (val * 100).toString().substring(0, 5) + "%";
+                    return parseFloat(val * 100).toFixed(2) + "%";
                 },
             },
         },
