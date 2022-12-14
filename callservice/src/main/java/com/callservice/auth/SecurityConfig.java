@@ -21,8 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/icon/**", "/api/v1/**")
-        .and().ignoring().antMatchers(HttpMethod.POST, "/home");
+        web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/icon/**", "/api/v1/**");
     }
 
     @Override
@@ -38,8 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/home", "/stats").hasRole("ADMIN")
+        http.csrf().disable().authorizeRequests().antMatchers("/home", "/stats", "/").hasRole("ADMIN")
             .and().formLogin()
-            .loginPage("/landing").permitAll();
+            .loginPage("/landing").permitAll()
+            .and().logout().logoutUrl("/logout").logoutSuccessUrl("/");
     }
 }

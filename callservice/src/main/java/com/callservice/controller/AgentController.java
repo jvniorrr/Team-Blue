@@ -46,7 +46,7 @@ public class AgentController implements ErrorController {
         return "landing";
     }
 
-    @RequestMapping(value = { "/home"}, method = {RequestMethod.GET})
+    @RequestMapping(value = {"/", "/home"}, method = {RequestMethod.GET})
     public String hello(Model model,
             @RequestParam(name = "status", required = false) String filter) 
     {
