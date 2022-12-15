@@ -65,6 +65,8 @@ function deleteHandler(event) {
         ) {
             loggedOutStats.html(parseInt(loggedOutStats.html()) - 1);
         }
+        entityStats.html(parseInt(entityStats.html()) - 1);
+
         agent.remove();
     }
 }

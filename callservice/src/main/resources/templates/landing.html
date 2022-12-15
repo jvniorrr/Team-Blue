@@ -11,31 +11,23 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/landing.css">
+    <link rel="icon" href="/icon/favicon.ico" type="image/x-icon">
+
     <script src="/js/landing.js" defer></script>
-
     <script src="/webjars/jquery/jquery.min.js"></script>
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Login Page</title>
-
-
-
 </head>
 
 <body>
 
     <div class="wrapper fadeInDown">
-        <div id="formContent">
-          <!-- Tabs Titles -->
-      
+        <div id="formContent">      
           <!-- Icon -->
           <div class="fadeIn first">
             <span th:if = "${response}" id = "response-bar"  th:text = "${response.message}"></span>
           </div>
-      
-          <!-- <span class="error_span" style="color: red;font-size: 13px;display: none;">Username/Password does not match.</span> -->
 
 
 
@@ -48,8 +40,7 @@
       
           <!-- Remind Passowrd -->
           <div id="formFooter">
-            <!-- <a class="underlineHover" href="#">Forgot Password?</a> -->
-            <a id = "abt-link" class="underlineHover" href = "https://github.com/ericjiang255/Team-Blue" target = "_blank">About</a>
+            <a id = "abt-link" class="underlineHover" href = "https://github.com/jvniorrr/Team-Blue" target = "_blank">About</a>
           </div>
       
         </div>

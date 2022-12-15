@@ -4,7 +4,7 @@
     --primary-dark: #292929;
     --secondary-dark: #2e2e2e;
     --primary-dark-text: #828282;
-    --agent-dark-unfilled: #4b4b4b; /* TODO: update color */
+    --agent-dark-unfilled: #4b4b4b; 
     --secondary-color: #bb86fc;
 
     /* agent colors */
@@ -28,9 +28,6 @@ body {
 }
 
 /* Navigation Bar */
-.navbar {
-    background: var(--secondary-dark);
-}
 
 .nav-title {
     color: var(--primary-dark-text);
@@ -42,7 +39,6 @@ body {
 /* sidebar */
 .sidebar {
     width: 16rem;
-    /* height: 60vh; */
     padding: 4rem 0rem !important;
     position: fixed;
     margin-left: -18.75rem;
@@ -92,16 +88,8 @@ body {
     color: #ffffff;
     text-shadow: 0rem 0.25rem 0.25rem var(--secondary-color);
 }
-
-/* .nav-link:active,
-.nav-link:focus,
-.nav-link:hover {
-    background-color: #ffffff26;
-} */
 .my-container {
     transition: 0.4s;
-    max-height: 93vh;
-    /* overflow: auto; */
 }
 
 .container-fluid {
@@ -137,13 +125,11 @@ body {
 }
 /* Agent Dots Colors  */
 .agent-dot {
-    /* filter: drop-shadow(0rem 0rem .3rem #A3A3A3); */
     margin: 0rem 0.05rem !important;
     transition: 0.5s;
     font-size: 0.6rem;
-    /* border-radius: 50%; */
 }
-/* TODO: Fix below hover effects */
+
 i .agent-dot:hover {
     background: #fff !important;
     box-shadow: 0 0 0 0.25rem #333, 0 0 0 0.375rem #a3a3a3 !important;
@@ -152,27 +138,9 @@ i .agent-dot:hover {
 i.fa-circle {
     color: var(--secondary-dark);
 }
-/* .available {
-    color: var(--agent-available-color) !important;
-}
-.busy {
-    color: var(--agent-busy-color) !important;
-}
-.logged-out,
-.loggedout {
-    color: var(--agent-loggedout-color) !important;
-}
-.preview {
-    color: var(--agent-preview-color) !important;
-}
-.after,
-.after-work {
-    color: var(--agent-after-color) !important;
-} */
 
 #dots-grid {
     max-height: 100vh;
-    /* overflow: hidden; */
     font-size: 0.56rem;
 }
 
@@ -200,23 +168,6 @@ i.fa-circle {
 }
 
 /* ETC */
-.neumorphism-badge {
-    /* TODO: Remove pixel usage; dont matter much for this class attribute as its not used, so likely will remove */
-    box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #ffffff;
-    background-color: transparent;
-    color: #31344b;
-
-    font-size: 0.7rem;
-    font-weight: 600;
-    border: 0.0625rem solid #d1d9e6;
-    padding: 0.275rem 0.425rem;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 0.55rem;
-}
-
 label {
     margin-bottom: 0.5rem;
 }

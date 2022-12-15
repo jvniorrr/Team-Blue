@@ -4,7 +4,7 @@
     --primary-dark: #292929;
     --secondary-dark: #2e2e2e;
     --primary-dark-text: #828282;
-    --agent-dark-unfilled: #4b4b4b; /* TODO: update color */
+    --agent-dark-unfilled: #4b4b4b;
     --secondary-color: #bb86fc;
     --agent-dark: #5e5e5e;
     --team-blue-primary: #a3e0ff;
@@ -31,24 +31,21 @@
 body {
     background: var(--primary-dark);
     min-height: 100vh;
+    line-height: 1.1 !important;
 }
 
 .my-container {
     transition: 0.4s;
     max-height: 90vh;
     min-height: 80vh;
-    /* overflow: auto; */
 }
 
 .container-fluid {
     max-height: 100%;
+
 }
 
 /* Navigation Bar */
-.navbar {
-    /* background: var(--secondary-dark); */
-}
-
 .nav-title {
     color: var(--primary-dark-text);
     font-family: "Nunito Sans", sans-serif;
@@ -76,9 +73,6 @@ body {
 .after-work,
 .afterwork {
     color: var(--agent-after-color);
-}
-.agent-dot {
-    font-size: 0.6rem;
 }
 
 .entityInfo-item {
@@ -124,13 +118,11 @@ a:hover {
 }
 
 .agent-dot {
-    /* filter: drop-shadow(0rem 0rem .3rem #A3A3A3); */
     margin: 0rem 0.05rem !important;
     transition: 0.5s;
     font-size: 0.6rem;
-    /* border-radius: 50%; */
 }
-/* TODO: Fix below hover effects */
+
 i .agent-dot:hover {
     background: #fff !important;
     box-shadow: 0 0 0 0.25rem #333, 0 0 0 0.375rem #a3a3a3 !important;

@@ -62,7 +62,7 @@ function updateHandler(event) {
 }
 
 /**
- * Function that updates information on row displaying entity population description.
+ * Function that updates information on row displaying entity population description when a delete event is emitted
  * @param {*} event 
  */
 function deleteHandler(event) {
@@ -147,6 +147,7 @@ function setupOptions() {
         chart: {
             ...defaultOptions.chart,
             type: "bar",
+            offsetY: 50,
         },
         tooltip: {
             enabled: true,
@@ -312,7 +313,6 @@ function setupOptions() {
         legend: {
             labels: {
                 colors: ["#fff"],
-                // userSeriesColors: true,
             },
         },
         stroke: {

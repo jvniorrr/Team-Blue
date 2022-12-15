@@ -113,9 +113,8 @@ $("#tooltip-color-option").on("input", () => {
  function setEntityRow() {
     document.querySelectorAll(".entityInfo-item").forEach( (row) => {
         let jDot = $(row);
-        if ((jDot).hasClass("available")) {
-            jDot.css("color", agentAvailableColor);
-        } else if ((jDot).hasClass("busy")) jDot.css("color", agentBusyColor);
+        if ((jDot).hasClass("available")) jDot.css("color", agentAvailableColor);
+        else if ((jDot).hasClass("busy")) jDot.css("color", agentBusyColor);
         else if ((jDot).hasClass("preview")) jDot.css("color", agentPreviewColor);
         else if ((jDot).hasClass("loggedout") || (jDot).hasClass("logged-out")) jDot.css("color", agentLoggedOutColor);
         else if ((jDot).hasClass("after")) jDot.css("color", `${agentAfterColor} !important`);
