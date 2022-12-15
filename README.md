@@ -132,8 +132,6 @@ https://app.swaggerhub.com/apis/J_2/Call-Service-Team-Blue/1.0.0#/
 -   [x] Retrieve all active agents
 -   [x] Filters for agents to retrieve if active, busy etc.
 -   [x] Database should store for now ID, status & a full name & an updatedTime/currentTime field as well.
--   [ ] Handle UNIQUE attributes for when setting stringID
--   [ ] Clear database, clears existing after X hours
 
 ## Contributing
 
