@@ -21,9 +21,9 @@
   <p align="center"> 
 Agent Call Service is a customer service application that provides call center supervisors the ability to monitor their agents. This application helps the supervisor stay organized and manage their time efficiently by monitoring a web page for changes. 
 <br>
-    <a href="https://github.com/ericjiang255/Team-Blue/issues">Report Bug</a>
+    <a href="https://github.com/jvniorrr/Team-Blue/issues">Report Bug</a>
     ·
-    <a href="https://github.com/ericjiang255/Team-Blue/issues">Request Feature</a>
+    <a href="https://github.com/jvniorrr/Team-Blue/issues">Request Feature</a>
   </p>
 </div>
 
@@ -90,7 +90,7 @@ For building and running the application you need:
 
 1. Clone the repo
     ```sh
-    git clone hhttps://github.com/ericjiang255/Team-Blue.git
+    git clone https://github.com/jvniorrr/Team-Blue.git
     ```
 2. Change directory to where you have cloned the repository. Once you are in the directory of the cloned repository `cd "callservice/src/main/java/com/callservice/"`
 3. There are several ways to run the Application on your local machine. One way is to execute the main method in the CallserviceApplication class from your IDE.
@@ -155,16 +155,16 @@ Please make sure to update tests as appropriate.
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/ericjiang255/Team-Blue.svg?style=for-the-badge
-[contributors-url]: https://github.com/ericjiang255/Team-Blue/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/ericjiang255/Team-Blue.svg?style=for-the-badge
-[forks-url]: https://github.com/ericjiang255/Team-Blue/network/members
-[stars-shield]: https://img.shields.io/github/stars/ericjiang255/Team-Blue.svg?style=for-the-badge
-[stars-url]: https://github.com/ericjiang255/Team-Blue/stargazers
-[issues-shield]: https://img.shields.io/github/issues/ericjiang255/Team-Blue.svg?style=for-the-badge
-[issues-url]: https://github.com/ericjiang255/Team-Blue/issues
-[license-shield]: https://img.shields.io/github/license/ericjiang255/Team-Blue.svg?style=for-the-badge
-[license-url]: https://github.com/ericjiang255/Team-Blue/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/jvniorrr/Team-Blue.svg?style=for-the-badge
+[contributors-url]: https://github.com/jvniorrr/Team-Blue/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/jvniorrr/Team-Blue.svg?style=for-the-badge
+[forks-url]: https://github.com/jvniorrr/Team-Blue/network/members
+[stars-shield]: https://img.shields.io/github/stars/jvniorrr/Team-Blue.svg?style=for-the-badge
+[stars-url]: https://github.com/jvniorrr/Team-Blue/stargazers
+[issues-shield]: https://img.shields.io/github/issues/jvniorrr/Team-Blue.svg?style=for-the-badge
+[issues-url]: https://github.com/jvniorrr/Team-Blue/issues
+[license-shield]: https://img.shields.io/github/license/jvniorrr/Team-Blue.svg?style=for-the-badge
+[license-url]: https://github.com/jvniorrr/Team-Blue/LICENSE.txt
 [product-screenshot]: images/screenshot.png
 [html.com]: https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white
 [css.com]: https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white
